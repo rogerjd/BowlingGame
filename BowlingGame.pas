@@ -9,12 +9,17 @@ type
   TFrameRolls = array[1..3] of TRollResult;
 
   TFrame = record
+  private
+    FCurrentRoll: integer;
+    procedure SetCurrentRoll(const Value: integer);
+  public
     FrameRolls: TFrameRolls;
     CurrentRoll: Integer;
     Over: Boolean;
     Number: Integer;
     Score: Integer;
     RunningTotal: Integer;
+//    property CurrentRoll: integer read FCurrentRoll write SetCurrentRoll;
   end;
 
   TFrames = array [1 .. 10] of TFrame;
@@ -23,6 +28,7 @@ type
   private
     FTotalScore: Integer;
     procedure SetTotalScore(const Value: Integer);
+    procedure CalculateScore();
   public
     Frames: TFrames;
     CurrentFrame: Integer;
@@ -101,6 +107,11 @@ begin
 end;
 *)
 
+procedure TBowlingGame.CalculateScore;
+begin
+
+end;
+
 procedure TBowlingGame.Roll(NumOfPins: Integer);
 var
   frame: TFrame;
@@ -108,6 +119,20 @@ begin
   frame := Frames[CurrentFrame];
   Inc(frame.CurrentRoll);
   frame.FrameRolls[frame.CurrentRoll] := TRollResult(NumOfPins);
+
+  CalculateScore();
+
+  if CurrentFrame < 10 then begin
+    if frame.CurrentRoll = 2 then begin
+      frame.Over := True;
+      Inc(CurrentFrame);
+    end;
+  end else begin
+    if frame.CurrentRoll = 3 then begin
+      frame.Over := True;
+      GameOver := True;
+    end;
+  end;
 end;
 
 function TBowlingGame.ScoreByFrame: Integer;
@@ -125,6 +150,13 @@ begin
   GameOver := False;
   FillChar(Frames, SizeOf(Frames), 0);
   CurrentFrame := 1;
+end;
+
+{ TFrame }
+
+procedure TFrame.SetCurrentRoll(const Value: integer);
+begin
+  FCurrentRoll := Value;
 end;
 
 end.
