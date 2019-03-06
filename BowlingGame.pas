@@ -65,26 +65,22 @@ type
     procedure Init();
   end;
 
-
   TPendingScoreFrame = class
     FrameNum: Integer;
-//    FrameRegScore: Integer;
-    Bonus1,
-    Bonus2: Integer;
+    FramesCtrl: TFramesCtrl;
+    Bonus1, Bonus2: Integer;
   private
-    function GetIsStrike: Integer;
-    property IsStrike: Integer read GetIsStrike;
     function ReadyToScore(): Boolean;
     procedure Score();
+    constructor Create(xFrameNum: Integer; xFramesCtrl: TFramesCtrl);
   end;
 
   TPendingFrames = class
-    Frames: TList<TPendingScoreFrame>;
+    FramesPending: TList<TPendingScoreFrame>;
   private
     function Any(): Boolean;
-    procedure Add(FrameNum: Integer);
+    procedure Add(FrameNum: Integer; xFramesCtrl: TFramesCtrl);
     procedure AddBonusPoints(pts: Integer);
-    procedure Score();
   end;
 
   TScoreCtrl = class
@@ -337,7 +333,8 @@ begin
       Over := True;
   end
   else
-    Over := (ownr.OpenFrame and (CurrentRoll = 2)) or ((not ownr.OpenFrame) and (CurrentRoll = 3));
+    Over := (ownr.OpenFrame and (CurrentRoll = 2)) or
+      ((not ownr.OpenFrame) and (CurrentRoll = 3));
 end;
 
 { TScoreCtrl }
@@ -361,12 +358,16 @@ var
 begin
   frame := FramesCtrl.GetCurrent();
 
-  //process pending score
-  if Pending.Any then begin
-    for i := 0 to Pending.Frames.Count - 1 do
+  // process pending score
+  if Pending.Any then
+  begin
+    for i := 0 to Pending.FramesPending.Count - 1 do
     begin
-      if Pending.Frames[i].ReadyToScore() then
-        Pending.Frames[i].Score();
+      if Pending.FramesPending[i].ReadyToScore() then begin
+        Pending.FramesPending[i].Score();
+        Pending.FramesPending[i].Free();
+        Pending.FramesPending.Delete(i);
+      end;
     end;
   end;
 
@@ -375,44 +376,60 @@ begin
     if (not frame.NeedRollsRecordedInFutureFrame()) then
       frame.Score := frame.FrameRollsCtrl.GetScore()
     else
-      Pending.Add(frame.Number);
+      Pending.Add(frame.Number, FramesCtrl);
   end
-  else begin
+  else
+  begin
     // score := frame score + bonus
   end;
 
-    (*
-      if frame.FrameRollsCtrl.Over then begin
-      //todo: strike/spare
-      if frame.OpenFrame then
-      frame.Score := frame.FrameRollsCtrl.GetScore()
-      else ; //todo
-      end;
-    *)
+  (*
+    if frame.FrameRollsCtrl.Over then begin
+    //todo: strike/spare
+    if frame.OpenFrame then
+    frame.Score := frame.FrameRollsCtrl.GetScore()
+    else ; //todo
+    end;
+  *)
 end;
 
 { TPendingScoreFrame }
 
-function TPendingScoreFrame.GetIsStrike: Integer;
+constructor TPendingScoreFrame.Create(xFrameNum: Integer;
+  xFramesCtrl: TFramesCtrl);
 begin
-//  Result := fr
+  FrameNum := xFrameNum;
+  FramesCtrl := xFramesCtrl;
+  Bonus1 := -1;
+  Bonus2 := -2;
 end;
 
 function TPendingScoreFrame.ReadyToScore: Boolean;
 begin
-
+  if FramesCtrl.Frames[FrameNum].Strike then
+    Result := (Bonus1 > -1) and (Bonus2 > -1)
+  else if FramesCtrl.Frames[FrameNum].Spare then
+    Result := (Bonus1 > -1);
 end;
 
 procedure TPendingScoreFrame.Score;
+var
+  frame: TFrame;
 begin
-
+  frame := FramesCtrl.Frames[FrameNum];
+  if frame.Strike then
+    frame.Score := frame.FrameRollsCtrl.GetScore() + Bonus1 + Bonus2
+  else if frame.Spare then
+    frame.Score := frame.FrameRollsCtrl.GetScore() + Bonus1;
 end;
 
 { TPendingFrames }
 
-procedure TPendingFrames.Add(FrameNum: Integer);
+procedure TPendingFrames.Add(FrameNum: Integer; xFramesCtrl: TFramesCtrl);
+var
+  PendingScoreFrame: TPendingScoreFrame;
 begin
-
+  PendingScoreFrame := TPendingScoreFrame.Create(FrameNum, xFramesCtrl);
 end;
 
 procedure TPendingFrames.AddBonusPoints(pts: Integer);
@@ -422,12 +439,7 @@ end;
 
 function TPendingFrames.Any: Boolean;
 begin
-  Result := Frames.Count > 0;
-end;
-
-procedure TPendingFrames.Score;
-begin
-
+  Result := FramesPending.Count > 0;
 end;
 
 end.
