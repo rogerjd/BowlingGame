@@ -61,7 +61,7 @@ type
     CurrentFrame: Integer;
   public
     function GetCurrent(): TFrame;
-    procedure Next();
+    function Next(): Boolean;
     procedure Init();
   end;
 
@@ -145,6 +145,9 @@ type
 
 implementation
 
+uses
+  Dialogs;
+
 { TBowlingGame }
 
 (*
@@ -192,7 +195,14 @@ end;
 procedure TBowlingGame.Roll(NumOfPins: Integer);
 var
   frame: TFrame;
+  IsNextFrame: Boolean;
 begin
+  if GameOver then
+  begin
+    MessageDlg('Game Over', mtInformation, [mbOK], 0);
+    Exit;
+  end;
+
   frame := FramesCtrl.GetCurrent();
   frame.FrameRollsCtrl.RecordRoll(NumOfPins); // over < 10
 
@@ -202,7 +212,10 @@ begin
   ScoreCtrl.Score(); // current and pending
 
   if frame.FrameRollsCtrl.Over then
-    FramesCtrl.Next();
+  begin
+    IsNextFrame := FramesCtrl.Next();
+    GameOver := not IsNextFrame;
+  end;
 end;
 
 function TBowlingGame.ScoreByFrame: Integer;
@@ -271,10 +284,17 @@ begin
   CurrentFrame := 1;
 end;
 
-procedure TFramesCtrl.Next;
+function TFramesCtrl.Next: Boolean;
 begin
   if CurrentFrame < 10 then
+  begin
     Inc(CurrentFrame);
+    Result := True;
+  end
+  else
+  begin
+    Result := False;
+  end;
 end;
 
 { TFrameRollsCtrl }
@@ -304,7 +324,7 @@ end;
 
 constructor TFrameRollsCtrl.Create(xownr: TFrame);
 begin
-
+  ownr := xownr;
 end;
 
 destructor TFrameRollsCtrl.Destroy;
@@ -363,7 +383,8 @@ begin
   begin
     for i := 0 to Pending.FramesPending.Count - 1 do
     begin
-      if Pending.FramesPending[i].ReadyToScore() then begin
+      if Pending.FramesPending[i].ReadyToScore() then
+      begin
         Pending.FramesPending[i].Score();
         Pending.FramesPending[i].Free();
         Pending.FramesPending.Delete(i);
@@ -433,8 +454,11 @@ begin
 end;
 
 procedure TPendingFrames.AddBonusPoints(pts: Integer);
+var
+  PendingScoreFrame: TPendingScoreFrame;
 begin
-
+  foreach
+    add to first non-neg fld
 end;
 
 function TPendingFrames.Any: Boolean;
