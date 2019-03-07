@@ -379,25 +379,17 @@ end;
 
 function TFrameRollsCtrl.NumPinsToRollTotal(NumPins: integer): TRollTotal;
 
-// only 2nd roll can result in Spare
   function IsSpare(): Boolean;
   begin
-    Result := (FrameRolls.Count = 1) and (NumPins <> 0) and
-      (RollTotalToNumberOfPins(FrameRolls[0]) in [0 .. 9]) and
-      (ord(FrameRolls[1]) + NumPins = 10);
+    Result := (FrameRolls.Count > 0) and (NumPins <> 0) and
+      (RollTotalToNumberOfPins(FrameRolls[FrameRolls.Count - 1]) in [0 .. 9])
+      and (RollTotalToNumberOfPins(FrameRolls[FrameRolls.Count - 1]) +
+      NumPins = 10);
   end;
 
   function IsStrike(): Boolean;
   begin
     Result := (not IsSpare()) and (NumPins = 10);
-    (*
-      if frame.Number < 10 then
-      Result := (FrameRolls.Count = 0) and (NumPins = 10)
-      else
-      Result := (FrameRolls.Count = 0) and (NumPins = 10)
-
-      // todo: bug 0, 10 = spare
-    *)
   end;
 
 begin
