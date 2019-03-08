@@ -34,7 +34,7 @@ implementation
 
 procedure TestTBowlingGame.SetUp;
 begin
-  FBowlingGame := TBowlingGame.Create;
+  FBowlingGame := TBowlingGame.Create;                  sds
 end;
 
 procedure TestTBowlingGame.TearDown;
