@@ -48,10 +48,10 @@ type
   TFrame = class
   private
     FCurrentRoll: integer;
-    FScore: Integer;
+    FScore: integer;
     procedure SetCurrentRoll(const Value: integer);
     function GetOpenFrame: Boolean;
-    procedure SetScore(const Value: Integer);
+    procedure SetScore(const Value: integer);
     // procedure SetIsScoreableByItself(const Value: Boolean);
   public
     StrikeCount, SpareCount: integer; // only 1 spare
@@ -60,14 +60,14 @@ type
 
     // over, see FRC
     Number: integer;
-//    Score: integer;
+    // Score: integer;
     Scored: Boolean;
     RunningTotal: integer; // todo: cumulative, set along with Score (prop)?
     procedure Reset();
     function CheckRollInput(NumOfPins: integer): Boolean;
     property OpenFrame: Boolean read GetOpenFrame;
     function NeedRollsRecordedInFutureFrame: Boolean;
-    property Score: Integer read FScore write SetScore;
+    property Score: integer read FScore write SetScore;
     Constructor Create(xFrameNum: integer; xFramesCtrl: TFramesCtrl);
     destructor Destroy(); override;
     // property CurrentRoll: integer read FCurrentRoll write SetCurrentRoll;
@@ -325,7 +325,7 @@ begin
   Result := (StrikeCount + SpareCount) = 0;
 end;
 
-procedure TFrame.SetScore(const Value: Integer);
+procedure TFrame.SetScore(const Value: integer);
 var
   PrevFrame: TFrame;
 begin
@@ -335,7 +335,8 @@ begin
   if FramesCtrl.CurrentFrame = 1 then
     RunningTotal := Value
   else
-    RunningTotal := FramesCtrl.Frames[FramesCtrl.CurrentFrame - 1].RunningTotal + Value;
+    RunningTotal := FramesCtrl.Frames[FramesCtrl.CurrentFrame - 1]
+      .RunningTotal + Value;
 end;
 
 procedure TFrame.SetCurrentRoll(const Value: integer);
@@ -608,9 +609,9 @@ begin
     if (not frame.NeedRollsRecordedInFutureFrame()) then
     begin
       frame.Score := frame.FrameRollsCtrl.GetScore();
-    //  frame.RunningTotal :=
+      // frame.RunningTotal :=
 
-//todo: remv      frame.Scored := True;
+      // todo: remv      frame.Scored := True;
     end
     else
       Pending.Add(frame.Number, FramesCtrl);
@@ -663,16 +664,16 @@ var
   frame: TFrame;
 begin
   frame := FramesCtrl.Frames[FrameNum]; // todo: bug?
-  if frame.StrikeCount = 1 then
+  if frame.StrikeCount = 1 then  //todo: > 1
   begin
     frame.Score := frame.FrameRollsCtrl.GetScore() + BonusPoints[0] +
       BonusPoints[1];
-//    frame.Scored := True;
+    // frame.Scored := True;
   end
   else if frame.SpareCount = 1 then
   begin
     frame.Score := frame.FrameRollsCtrl.GetScore() + BonusPoints[0];
-//    frame.Scored := True;
+    // frame.Scored := True;
   end;
 end;
 
@@ -683,6 +684,7 @@ var
   PendingScoreFrame: TPendingScoreFrame;
 begin
   PendingScoreFrame := TPendingScoreFrame.Create(FrameNum, xFramesCtrl);
+  FramesPending.Add(PendingScoreFrame);
 end;
 
 procedure TPendingFrames.AddBonusPoints(pts: integer);
