@@ -50,7 +50,7 @@ type
     function GetOpenFrame: Boolean;
     // procedure SetIsScoreableByItself(const Value: Boolean);
   public
-    Strike, Spare: Boolean;
+    StrikeCount, SpareCount: integer;
     FrameRollsCtrl: TFrameRollsCtrl;
 
     // over, see FRC
@@ -271,7 +271,7 @@ end;
 
 function TFrame.GetOpenFrame: Boolean;
 begin
-  Result := not(Strike or Spare);
+  Result := (StrikeCount + SpareCount) = 0;
 end;
 
 procedure TFrame.SetCurrentRoll(const Value: integer);
@@ -354,21 +354,43 @@ function TFrameRollsCtrl.GetScore: integer;
     i: integer;
   begin
     Result := 0;
-    for i := 0 to FrameRolls.Count do
-      Inc(Result, RollTotalToNumberOfPins(FrameRolls[i])); // todo:
+
+    for i := 0 to FrameRolls.Count - 1 do
+    begin
+      if FrameRolls[i] = rtStrike then
+        Inc(Result, 10)
+      else if RollTotalToNumberOfPins(FrameRolls[i]) in [0 .. 9] then
+        Inc(Result, RollTotalToNumberOfPins(FrameRolls[i]))
+      else if FrameRolls[i] = rtSpare then begin
+        Dec(Result, RollTotalToNumberOfPins(FrameRolls[i - 1]));
+        Inc(Result, 10);
+      end;
+
+      // Inc(Result, RollTotalToNumberOfPins(FrameRolls[i])); // todo: bug
+    end;
+
+    (*
+      for i := 0 to FrameRolls.Count - 1 do
+      Inc(Result, RollTotalToNumberOfPins(FrameRolls[i])); // todo: bug
+    *)
   end;
 
 begin
-  (* todo:
-    if frame.Number < 10 then
-    begin
-    if not frame.OpenFrame then
-    Result := 10;
-    Exit;
-    end;
-  *)
+  Result := SumFrameRolls(); // todo and 1 + 2 + 3 if 10th
 
-  Result := SumFrameRolls();; // todo and 1 + 2 + 3 if 10th
+(*
+  if frame.Number < 10 then
+  begin
+    if not frame.OpenFrame then
+      Result := 10;
+    Exit;
+  end
+  else
+  begin
+    Result := SumFrameRolls();; // todo and 1 + 2 + 3 if 10th
+  end;
+*)
+
   (*
     if not ownr.OpenFrame then
     Result := 10
@@ -396,14 +418,14 @@ begin
   if IsStrike() then // todo:
   begin
     Result := rtStrike;
-    frame.Strike := True;
+    Inc(frame.StrikeCount);
     Exit;
   end;
 
   if IsSpare() then
   begin
     Result := rtSpare;
-    frame.Spare := True;
+    Inc(frame.SpareCount);
     Exit;
   end;
 
@@ -436,7 +458,7 @@ begin
 
   if frame.Number < 10 then
   begin
-    if (frame.Strike or frame.Spare) or (CurrentRoll = 2) then
+    if ((frame.StrikeCount + frame.SpareCount) > 0) or (CurrentRoll = 2) then
       Over := True;
   end
   else
@@ -534,9 +556,9 @@ end;
 
 function TPendingScoreFrame.ReadyToScore: Boolean;
 begin
-  if FramesCtrl.Frames[FrameNum].Strike then
+  if FramesCtrl.Frames[FrameNum].StrikeCount = 1 then
     Result := BonusPoints.Count = 2 // (Bonus1 > -1) and (Bonus2 > -1)
-  else if FramesCtrl.Frames[FrameNum].Spare then
+  else if FramesCtrl.Frames[FrameNum].SpareCount = 1 then
     Result := BonusPoints.Count = 1; // (Bonus1 > -1);
 end;
 
@@ -544,11 +566,11 @@ procedure TPendingScoreFrame.Score;
 var
   frame: TFrame;
 begin
-  frame := FramesCtrl.Frames[FrameNum];
-  if frame.Strike then
+  frame := FramesCtrl.Frames[FrameNum]; // todo: bug?
+  if frame.StrikeCount = 1 then
     frame.Score := frame.FrameRollsCtrl.GetScore() + BonusPoints[0] +
       BonusPoints[1]
-  else if frame.Spare then
+  else if frame.SpareCount = 1 then
     frame.Score := frame.FrameRollsCtrl.GetScore() + BonusPoints[0];
 end;
 
