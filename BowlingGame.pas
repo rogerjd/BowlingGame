@@ -32,7 +32,7 @@ type
     // FrameRolls: TFrameRolls2;
     // FrameRolls2: TList<integer>;
   private
-    CurrentRoll: integer; // todo: dont need w/list?
+    // CurrentRoll: integer; // todo: dont need w/list?
     function GetScore: integer;
     function NumPinsToRollTotal(NumPins: integer): TRollTotal;
     function RollTotalToNumberOfPins(RollTotal: TRollTotal): integer;
@@ -44,31 +44,37 @@ type
   end;
 
   TFramesCtrl = class;
+  TBowlingGame = class;
 
   TFrame = class
   private
     FCurrentRoll: integer;
     FScore: integer;
+    FRunningTotal: integer;
     procedure SetCurrentRoll(const Value: integer);
     function GetOpenFrame: Boolean;
     procedure SetScore(const Value: integer);
+    procedure SetRunningTotal(const Value: integer);
     // procedure SetIsScoreableByItself(const Value: Boolean);
   public
     StrikeCount, SpareCount: integer; // only 1 spare
     FramesCtrl: TFramesCtrl;
     FrameRollsCtrl: TFrameRollsCtrl;
+    Game: TBowlingGame;
 
     // over, see FRC
     Number: integer;
     // Score: integer;
     Scored: Boolean;
-    RunningTotal: integer; // todo: cumulative, set along with Score (prop)?
+    // todo: cumulative, set along with Score (prop)?
     procedure Reset();
     function CheckRollInput(NumOfPins: integer): Boolean;
     property OpenFrame: Boolean read GetOpenFrame;
     function NeedRollsRecordedInFutureFrame: Boolean;
     property Score: integer read FScore write SetScore;
-    Constructor Create(xFrameNum: integer; xFramesCtrl: TFramesCtrl);
+    property RunningTotal: integer read FRunningTotal write SetRunningTotal;
+    Constructor Create(xFrameNum: integer; xFramesCtrl: TFramesCtrl;
+      xGame: TBowlingGame);
     destructor Destroy(); override;
     // property CurrentRoll: integer read FCurrentRoll write SetCurrentRoll;
   end;
@@ -79,11 +85,12 @@ type
   private
     Frames: TFrames;
     CurrentFrame: integer;
+    Game: TBowlingGame;
   public
     function GetCurrent(): TFrame;
     function Next(): Boolean;
     procedure Init();
-    constructor Create();
+    constructor Create(xGame: TBowlingGame);
     destructor Destroy(); override;
   end;
 
@@ -120,16 +127,15 @@ type
   TBowlingGame = class
   private
     FTotalScore: integer;
-    procedure SetTotalScore(const Value: integer);
     procedure CalculateScore();
   public
     FramesCtrl: TFramesCtrl;
     ScoreCtrl: TScoreCtrl;
     GameOver: Boolean;
+    TotalScore: integer;
     procedure Start();
     procedure Roll(NumOfPins: integer);
     function ScoreByFrame(): integer;
-    property TotalScore: integer read FTotalScore write SetTotalScore;
     // todo: cumulative
     constructor Create();
     destructor Destroy(); override;
@@ -208,7 +214,7 @@ end;
 
 constructor TBowlingGame.Create;
 begin
-  FramesCtrl := TFramesCtrl.Create();
+  FramesCtrl := TFramesCtrl.Create(self);
   ScoreCtrl := TScoreCtrl.Create(FramesCtrl);
 end;
 
@@ -268,11 +274,6 @@ begin
 
 end;
 
-procedure TBowlingGame.SetTotalScore(const Value: integer);
-begin
-  FTotalScore := Value;
-end;
-
 procedure TBowlingGame.Start;
 begin
   GameOver := False;
@@ -292,11 +293,13 @@ begin
   Result := NumOfPins <= PinsStanding;
 end;
 
-constructor TFrame.Create(xFrameNum: integer; xFramesCtrl: TFramesCtrl);
+constructor TFrame.Create(xFrameNum: integer; xFramesCtrl: TFramesCtrl;
+  xGame: TBowlingGame);
 begin
   Number := xFrameNum;
   FramesCtrl := xFramesCtrl;
   FrameRollsCtrl := TFrameRollsCtrl.Create(self);
+
 end;
 
 destructor TFrame.Destroy;
@@ -344,15 +347,21 @@ begin
   FCurrentRoll := Value;
 end;
 
+procedure TFrame.SetRunningTotal(const Value: integer);
+begin
+  FRunningTotal := Value;
+  Game.TotalScore := Value;
+end;
+
 { TFramesCtrl }
 
-constructor TFramesCtrl.Create;
+constructor TFramesCtrl.Create(xGame: TBowlingGame);
 var
   i: integer;
 begin
   for i := 1 to 10 do
   begin
-    Frames[i] := TFrame.Create(i, self);
+    Frames[i] := TFrame.Create(i, self, xGame);
   end;
 end;
 
@@ -428,7 +437,7 @@ constructor TFrameRollsCtrl.Create(xownr: TFrame);
 begin
   frame := xownr;
   FrameRolls := TList<TRollTotal>.Create();
-  CurrentRoll := 0;
+  // CurrentRoll := 0;
 end;
 
 destructor TFrameRollsCtrl.Destroy;
@@ -542,7 +551,7 @@ end;
 
 procedure TFrameRollsCtrl.RecordRoll(NumPins: integer);
 begin
-  Inc(CurrentRoll); // todo: use List.count
+  // Inc(CurrentRoll); // todo: use List.count
   FrameRolls.Add(NumPinsToRollTotal(NumPins));
   // TRollTotal(NumPins);
   // todo: SetValue also Strike/Spare in ownr0
@@ -550,12 +559,13 @@ begin
   // is frame done
   if frame.Number < 10 then
   begin // todo: List.Count                                 //todo: use list
-    if ((frame.StrikeCount + frame.SpareCount) > 0) or (CurrentRoll = 2) then
+    if ((frame.StrikeCount + frame.SpareCount) > 0) or (FrameRolls.Count = 2)
+    then
       Over := True;
   end
   else
-    Over := (frame.OpenFrame and (CurrentRoll = 2)) or
-      ((not frame.OpenFrame) and (CurrentRoll = 3));
+    Over := (frame.OpenFrame and (FrameRolls.Count = 2)) or
+      ((not frame.OpenFrame) and (FrameRolls.Count = 3));
 end;
 
 function TFrameRollsCtrl.RollTotalToNumberOfPins(RollTotal: TRollTotal)
@@ -664,7 +674,7 @@ var
   frame: TFrame;
 begin
   frame := FramesCtrl.Frames[FrameNum]; // todo: bug?
-  if frame.StrikeCount = 1 then  //todo: > 1
+  if frame.StrikeCount = 1 then // todo: > 1
   begin
     frame.Score := frame.FrameRollsCtrl.GetScore() + BonusPoints[0] +
       BonusPoints[1];
