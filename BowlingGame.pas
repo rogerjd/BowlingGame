@@ -7,7 +7,7 @@ uses
 
 type
   TRollTotal = (rtZero, rtOne, rtTwo, rtThree, rtFour, rtFive, rtSix, rtSeven,
-    rtEight, rtNine, rtTen, rtStrike, rtSpare); // todo: never 10?
+    rtEight, rtNine, rtStrike, rtSpare); // todo: never 10?
 
   TFrameRolls2 = array [1 .. 3] of TRollTotal;
 
@@ -50,17 +50,17 @@ type
     function GetOpenFrame: Boolean;
     // procedure SetIsScoreableByItself(const Value: Boolean);
   public
-    StrikeCount, SpareCount: integer;
+    StrikeCount, SpareCount: integer; // only 1 spare
     FrameRollsCtrl: TFrameRollsCtrl;
 
     // over, see FRC
     Number: integer;
     Score: integer;
     Scored: Boolean;
-    RunningTotal: integer;
+    RunningTotal: integer; // todo: cumulative
     property OpenFrame: Boolean read GetOpenFrame;
     function NeedRollsRecordedInFutureFrame: Boolean;
-    Constructor Create();
+    Constructor Create(xFrameNum: integer);
     destructor Destroy(); override;
     // property CurrentRoll: integer read FCurrentRoll write SetCurrentRoll;
   end;
@@ -120,6 +120,7 @@ type
     procedure Roll(NumOfPins: integer);
     function ScoreByFrame(): integer;
     property TotalScore: integer read FTotalScore write SetTotalScore;
+    // todo: cumulative
     constructor Create();
     destructor Destroy(); override;
   end;
@@ -252,8 +253,9 @@ end;
 
 { TFrame }
 
-constructor TFrame.Create;
+constructor TFrame.Create(xFrameNum: integer);
 begin
+  Number := xFrameNum;
   FrameRollsCtrl := TFrameRollsCtrl.Create(self);
 end;
 
@@ -285,7 +287,7 @@ end;
 
 function TFramesCtrl.GetCurrent(): TFrame;
 begin
-//??  Inc(CurrentFrame);
+  // ??  Inc(CurrentFrame);
   Result := Frames[CurrentFrame];
 end;
 
@@ -295,11 +297,11 @@ var
 begin
   for i := 1 to 10 do
   begin
-    Frames[i] := TFrame.Create();
-    Frames[i].Number := i;
+    Frames[i] := TFrame.Create(i);
+    // Frames[i].Number := i;
   end;
 
-  CurrentFrame := 0;
+  CurrentFrame := 1;
 end;
 
 function TFramesCtrl.Next: Boolean;
@@ -458,11 +460,12 @@ end;
 
 procedure TFrameRollsCtrl.RecordRoll(NumPins: integer);
 begin
-  Inc(CurrentRoll);
+  Inc(CurrentRoll); // todo: use List.count
   FrameRolls.Add(NumPinsToRollTotal(NumPins));
   // TRollTotal(NumPins);
   // todo: SetValue also Strike/Spare in ownr0
 
+  // is frame done
   if frame.Number < 10 then
   begin // todo: List.Count
     if ((frame.StrikeCount + frame.SpareCount) > 0) or (CurrentRoll = 2) then
@@ -522,7 +525,10 @@ begin
   if frame.FrameRollsCtrl.Over then
   begin
     if (not frame.NeedRollsRecordedInFutureFrame()) then
-      frame.Score := frame.FrameRollsCtrl.GetScore()
+    begin
+      frame.Score := frame.FrameRollsCtrl.GetScore();
+      frame.Scored := True;
+    end
     else
       Pending.Add(frame.Number, FramesCtrl);
   end
@@ -575,10 +581,16 @@ var
 begin
   frame := FramesCtrl.Frames[FrameNum]; // todo: bug?
   if frame.StrikeCount = 1 then
+  begin
     frame.Score := frame.FrameRollsCtrl.GetScore() + BonusPoints[0] +
-      BonusPoints[1]
+      BonusPoints[1];
+    frame.Scored := True;
+  end
   else if frame.SpareCount = 1 then
+  begin
     frame.Score := frame.FrameRollsCtrl.GetScore() + BonusPoints[0];
+    frame.Scored := True;
+  end;
 end;
 
 { TPendingFrames }

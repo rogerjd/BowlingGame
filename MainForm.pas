@@ -41,6 +41,7 @@ begin
   bg := TBowlingGame.Create();
   bg.Start();
   bg.Roll(3);
+  bg.Roll(4);
   bg.Free();
 end;
 
