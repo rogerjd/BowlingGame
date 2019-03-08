@@ -31,7 +31,6 @@ type
 
 implementation
 
-
 procedure TestTBowlingGame.SetUp;
 begin
   FBowlingGame := TBowlingGame.Create;
@@ -67,7 +66,8 @@ begin
 end;
 
 initialization
-  // Register any test cases with the test runner
-  RegisterTest(TestTBowlingGame.Suite);
-end.
 
+// Register any test cases with the test runner
+RegisterTest(TestTBowlingGame.Suite);
+
+end.
