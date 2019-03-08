@@ -31,8 +31,8 @@ type
     FrameRolls: TList<TRollTotal>; // TFrameRolls
     // FrameRolls: TFrameRolls2;
     // FrameRolls2: TList<integer>;
-    CurrentRoll: integer;
   private
+    CurrentRoll: integer; // todo: dont need w/list?
     function GetScore: integer;
     function NumPinsToRollTotal(NumPins: integer): TRollTotal;
     function RollTotalToNumberOfPins(RollTotal: TRollTotal): integer;
@@ -95,6 +95,8 @@ type
     function Any(): Boolean;
     procedure Add(FrameNum: integer; xFramesCtrl: TFramesCtrl);
     procedure AddBonusPoints(pts: integer);
+    constructor Create();
+    destructor Destroy; override;
   end;
 
   TScoreCtrl = class
@@ -283,7 +285,7 @@ end;
 
 function TFramesCtrl.GetCurrent(): TFrame;
 begin
-  Inc(CurrentFrame);
+//??  Inc(CurrentFrame);
   Result := Frames[CurrentFrame];
 end;
 
@@ -291,7 +293,8 @@ procedure TFramesCtrl.Init;
 var
   i: integer;
 begin
-  for i := 1 to 10 do begin
+  for i := 1 to 10 do
+  begin
     Frames[i] := TFrame.Create();
     Frames[i].Number := i;
   end;
@@ -340,11 +343,13 @@ end;
 constructor TFrameRollsCtrl.Create(xownr: TFrame);
 begin
   frame := xownr;
+  FrameRolls := TList<TRollTotal>.Create();
+  CurrentRoll := 0;
 end;
 
 destructor TFrameRollsCtrl.Destroy;
 begin
-
+  FrameRolls.Free();
   inherited;
 end;
 
@@ -362,7 +367,8 @@ function TFrameRollsCtrl.GetScore: integer;
         Inc(Result, 10)
       else if RollTotalToNumberOfPins(FrameRolls[i]) in [0 .. 9] then
         Inc(Result, RollTotalToNumberOfPins(FrameRolls[i]))
-      else if FrameRolls[i] = rtSpare then begin
+      else if FrameRolls[i] = rtSpare then
+      begin
         Dec(Result, RollTotalToNumberOfPins(FrameRolls[i - 1]));
         Inc(Result, 10);
       end;
@@ -379,18 +385,18 @@ function TFrameRollsCtrl.GetScore: integer;
 begin
   Result := SumFrameRolls(); // todo and 1 + 2 + 3 if 10th
 
-(*
-  if frame.Number < 10 then
-  begin
+  (*
+    if frame.Number < 10 then
+    begin
     if not frame.OpenFrame then
-      Result := 10;
+    Result := 10;
     Exit;
-  end
-  else
-  begin
+    end
+    else
+    begin
     Result := SumFrameRolls();; // todo and 1 + 2 + 3 if 10th
-  end;
-*)
+    end;
+  *)
 
   (*
     if not ownr.OpenFrame then
@@ -453,12 +459,12 @@ end;
 procedure TFrameRollsCtrl.RecordRoll(NumPins: integer);
 begin
   Inc(CurrentRoll);
-  FrameRolls[CurrentRoll] := NumPinsToRollTotal(NumPins);
+  FrameRolls.Add(NumPinsToRollTotal(NumPins));
   // TRollTotal(NumPins);
   // todo: SetValue also Strike/Spare in ownr0
 
   if frame.Number < 10 then
-  begin
+  begin // todo: List.Count
     if ((frame.StrikeCount + frame.SpareCount) > 0) or (CurrentRoll = 2) then
       Over := True;
   end
@@ -597,6 +603,17 @@ end;
 function TPendingFrames.Any: Boolean;
 begin
   Result := FramesPending.Count > 0;
+end;
+
+constructor TPendingFrames.Create;
+begin
+  FramesPending := TList<TPendingScoreFrame>.Create();
+end;
+
+destructor TPendingFrames.Destroy;
+begin
+  FramesPending.Free();
+  inherited;
 end;
 
 (*
