@@ -299,7 +299,7 @@ begin
   Number := xFrameNum;
   FramesCtrl := xFramesCtrl;
   FrameRollsCtrl := TFrameRollsCtrl.Create(self);
-
+  Game := xGame;
 end;
 
 destructor TFrame.Destroy;
@@ -387,12 +387,13 @@ procedure TFramesCtrl.Init;
 var
   i: integer;
 begin
+  CurrentFrame := 1;
+
   for i := 1 to 10 do
   begin
     Frames[i].Reset();
   end;
 
-  CurrentFrame := 1;
 end;
 
 function TFramesCtrl.Next: Boolean;

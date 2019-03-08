@@ -34,6 +34,8 @@ implementation
 procedure TestTBowlingGame.SetUp;
 begin
   FBowlingGame := TBowlingGame.Create;
+  FBowlingGame.Start;
+  Assert(FBowlingGame.TotalScore = 0);
 end;
 
 procedure TestTBowlingGame.TearDown;
@@ -44,7 +46,6 @@ end;
 
 procedure TestTBowlingGame.TestStart;
 begin
-  FBowlingGame.Start;
   // TODO: Validate method results
 end;
 
@@ -54,6 +55,10 @@ var
 begin
   // TODO: Setup method call parameters
   FBowlingGame.Roll(4);
+  Assert(FBowlingGame.TotalScore = 0);
+  FBowlingGame.Roll(3);
+  Assert(FBowlingGame.TotalScore = 7);
+
   // TODO: Validate method results
 end;
 
