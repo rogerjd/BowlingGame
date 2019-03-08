@@ -335,11 +335,11 @@ begin
   FScore := Value;
   Scored := True;
 
-  if FramesCtrl.CurrentFrame = 1 then
+  if (* FramesCtrl.CurrentFrame *) Number = 1 then
     RunningTotal := Value
   else
-    RunningTotal := FramesCtrl.Frames[FramesCtrl.CurrentFrame - 1]
-      .RunningTotal + Value;
+    RunningTotal := FramesCtrl.Frames
+      [Number - 1 (* FramesCtrl.CurrentFrame - 1 *) ].RunningTotal + Value;
 end;
 
 procedure TFrame.SetCurrentRoll(const Value: integer);
@@ -617,7 +617,7 @@ begin
 
   if frame.FrameRollsCtrl.Over then
   begin
-    if (not frame.NeedRollsRecordedInFutureFrame()) then
+    if (not frame.NeedRollsRecordedInFutureFrame()) then // ReadyToScore
     begin
       frame.Score := frame.FrameRollsCtrl.GetScore();
       // frame.RunningTotal :=
@@ -675,7 +675,7 @@ var
   frame: TFrame;
 begin
   frame := FramesCtrl.Frames[FrameNum]; // todo: bug?
-  if frame.StrikeCount = 1 then // todo: > 1
+  if frame.StrikeCount = 1 then // todo: bug > 1
   begin
     frame.Score := frame.FrameRollsCtrl.GetScore() + BonusPoints[0] +
       BonusPoints[1];

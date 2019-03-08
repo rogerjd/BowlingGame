@@ -31,10 +31,11 @@ type
 
 implementation
 
-
 procedure TestTBowlingGame.SetUp;
 begin
-  FBowlingGame := TBowlingGame.Create;                werwerwe
+  FBowlingGame := TBowlingGame.Create;
+  FBowlingGame.Start;
+  Assert(FBowlingGame.TotalScore = 0);
 end;
 
 procedure TestTBowlingGame.TearDown;
@@ -45,7 +46,6 @@ end;
 
 procedure TestTBowlingGame.TestStart;
 begin
-  FBowlingGame.Start;
   // TODO: Validate method results
 end;
 
@@ -54,7 +54,11 @@ var
   NumOfPins: Integer;
 begin
   // TODO: Setup method call parameters
-  FBowlingGame.Roll(NumOfPins);
+  FBowlingGame.Roll(4);
+  Assert(FBowlingGame.TotalScore = 0);
+  FBowlingGame.Roll(3);
+  Assert(FBowlingGame.TotalScore = 7);
+
   // TODO: Validate method results
 end;
 
@@ -67,7 +71,8 @@ begin
 end;
 
 initialization
-  // Register any test cases with the test runner
-  RegisterTest(TestTBowlingGame.Suite);
-end.
 
+// Register any test cases with the test runner
+RegisterTest(TestTBowlingGame.Suite);
+
+end.

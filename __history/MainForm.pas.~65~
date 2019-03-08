@@ -42,6 +42,9 @@ begin
   bg.Start();
   bg.Roll(3);
   bg.Roll(4);
+  bg.Roll(10);
+  bg.Roll(7);
+  bg.Roll(2);
   bg.Free();
 end;
 

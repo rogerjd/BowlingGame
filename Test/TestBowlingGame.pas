@@ -58,6 +58,11 @@ begin
   Assert(FBowlingGame.TotalScore = 0);
   FBowlingGame.Roll(3);
   Assert(FBowlingGame.TotalScore = 7);
+  FBowlingGame.Roll(10);
+  Assert(FBowlingGame.TotalScore = 7);
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(2);
+  Assert(FBowlingGame.TotalScore = 35);
 
   // TODO: Validate method results
 end;
