@@ -58,6 +58,7 @@ type
     Score: integer;
     Scored: Boolean;
     RunningTotal: integer; // todo: cumulative
+    procedure Reset();
     property OpenFrame: Boolean read GetOpenFrame;
     function NeedRollsRecordedInFutureFrame: Boolean;
     Constructor Create(xFrameNum: integer);
@@ -75,6 +76,8 @@ type
     function GetCurrent(): TFrame;
     function Next(): Boolean;
     procedure Init();
+    constructor Create();
+    destructor Destroy(); override;
   end;
 
   TPendingScoreFrame = class
@@ -273,6 +276,13 @@ begin
     Result := not OpenFrame;
 end;
 
+procedure TFrame.Reset;
+begin
+  Score := 0;
+  Scored := False;
+  RunningTotal := 0;
+end;
+
 function TFrame.GetOpenFrame: Boolean;
 begin
   Result := (StrikeCount + SpareCount) = 0;
@@ -284,6 +294,28 @@ begin
 end;
 
 { TFramesCtrl }
+
+constructor TFramesCtrl.Create;
+var
+  i: integer;
+begin
+  for i := 1 to 10 do
+  begin
+    Frames[i] := TFrame.Create(i);
+  end;
+end;
+
+destructor TFramesCtrl.Destroy;
+var
+  i: integer;
+begin
+  for i := 1 to 10 do
+  begin
+    Frames[i].Free();
+  end;
+
+  inherited;
+end;
 
 function TFramesCtrl.GetCurrent(): TFrame;
 begin
@@ -297,8 +329,7 @@ var
 begin
   for i := 1 to 10 do
   begin
-    Frames[i] := TFrame.Create(i);
-    // Frames[i].Number := i;
+    Frames[i].Reset();
   end;
 
   CurrentFrame := 1;
