@@ -59,6 +59,7 @@ type
     Scored: Boolean;
     RunningTotal: integer; // todo: cumulative
     procedure Reset();
+    function CheckRollInput(NumOfPins: integer): Boolean;
     property OpenFrame: Boolean read GetOpenFrame;
     function NeedRollsRecordedInFutureFrame: Boolean;
     Constructor Create(xFrameNum: integer);
@@ -166,7 +167,7 @@ type
 implementation
 
 uses
-  Dialogs;
+  Dialogs, SysUtils;
 
 { TBowlingGame }
 
@@ -216,6 +217,12 @@ procedure TBowlingGame.Roll(NumOfPins: integer);
 var
   frame: TFrame;
   IsNextFrame: Boolean;
+
+  function ValidInput(): Boolean;
+  begin
+    Result := NumOfPins in [0 .. 10];
+  end;
+
 begin
   if GameOver then
   begin
@@ -223,7 +230,19 @@ begin
     Exit;
   end;
 
+  if not ValidInput() then
+  begin
+    MessageDlg('Invalid input, Roll = ' + IntToStr(NumOfPins), mtInformation,
+      [mbOK], 0);
+    Exit;
+  end;
+
   frame := FramesCtrl.GetCurrent();
+  if not frame.CheckRollInput(NumOfPins) then
+  begin
+    MessageDlg('Possible invalid input, roll > pins standing = ' +
+      IntToStr(NumOfPins), mtInformation, [mbOK], 0);
+  end;
   frame.FrameRollsCtrl.RecordRoll(NumOfPins); // over < 10
 
   if ScoreCtrl.Pending.Any then
@@ -255,6 +274,17 @@ begin
 end;
 
 { TFrame }
+
+// input: NumOfPins int, the number of pins knocked down in this roll
+// output: boolean, True if NumOfPins is <= pins standing in the current frame, else false
+function TFrame.CheckRollInput(NumOfPins: integer): Boolean;
+var
+  PinsStanding: integer;
+begin
+  // 10th frame can have strike/spare and still be 'active frame'
+  PinsStanding := 10 - (FrameRollsCtrl.GetScore() mod 10);
+  Result := NumOfPins <= PinsStanding;
+end;
 
 constructor TFrame.Create(xFrameNum: integer);
 begin
