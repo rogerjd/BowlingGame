@@ -548,7 +548,7 @@ begin
 
   // is frame done
   if frame.Number < 10 then
-  begin // todo: List.Count
+  begin // todo: List.Count                                 //todo: use list
     if ((frame.StrikeCount + frame.SpareCount) > 0) or (CurrentRoll = 2) then
       Over := True;
   end

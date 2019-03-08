@@ -53,7 +53,7 @@ var
   NumOfPins: Integer;
 begin
   // TODO: Setup method call parameters
-  FBowlingGame.Roll(NumOfPins);
+  FBowlingGame.Roll(4);
   // TODO: Validate method results
 end;
 
