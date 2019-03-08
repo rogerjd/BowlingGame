@@ -291,11 +291,12 @@ procedure TFramesCtrl.Init;
 var
   i: integer;
 begin
-  FillChar(self, SizeOf(self), 0);
-  for i := 1 to 10 do
+  for i := 1 to 10 do begin
+    Frames[i] := TFrame.Create();
     Frames[i].Number := i;
+  end;
 
-  CurrentFrame := 1;
+  CurrentFrame := 0;
 end;
 
 function TFramesCtrl.Next: Boolean;

@@ -38,6 +38,10 @@ procedure TForm1.Button2Click(Sender: TObject);
 var
   bg: TBowlingGame;
 begin
+  bg := TBowlingGame.Create();
+  bg.Start();
+  bg.Roll(3);
+  bg.Free();
 end;
 
 end.
