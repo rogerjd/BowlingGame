@@ -27,6 +27,9 @@ type
     procedure TestStart;
     procedure TestRoll;
     procedure TestPerfectGame();
+    procedure TestAllGutterGame();
+    procedure TestStrikeSpare();
+    procedure TestAllSpareAndStrike();
     procedure TestScoreByFrame;
   end;
 
@@ -37,6 +40,7 @@ begin
   FBowlingGame := TBowlingGame.Create;
   FBowlingGame.Start;
   Assert(FBowlingGame.TotalScore = 0);
+  Assert(not FBowlingGame.GameOver);
 end;
 
 procedure TestTBowlingGame.TearDown;
@@ -48,6 +52,82 @@ end;
 procedure TestTBowlingGame.TestStart;
 begin
   // TODO: Validate method results
+end;
+
+procedure TestTBowlingGame.TestStrikeSpare;
+begin
+  Assert(not FBowlingGame.GameOver);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+  FBowlingGame.Roll(10);
+  Assert(FBowlingGame.TotalScore = 200);
+  Assert(FBowlingGame.GameOver);
+end;
+
+procedure TestTBowlingGame.TestAllGutterGame;
+begin
+  FBowlingGame.Roll(0);
+  FBowlingGame.Roll(0);
+  FBowlingGame.Roll(0);
+  FBowlingGame.Roll(0);
+  FBowlingGame.Roll(0);
+  FBowlingGame.Roll(0);
+  FBowlingGame.Roll(0);
+  FBowlingGame.Roll(0);
+  FBowlingGame.Roll(0);
+  FBowlingGame.Roll(0);
+  FBowlingGame.Roll(0);
+  FBowlingGame.Roll(0);
+  Assert(FBowlingGame.TotalScore = 0);
+end;
+
+procedure TestTBowlingGame.TestAllSpareAndStrike;
+begin
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+
+  FBowlingGame.Roll(8);
+  FBowlingGame.Roll(2);
+
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+
+  FBowlingGame.Roll(5);
+  FBowlingGame.Roll(5);
+
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+
+  FBowlingGame.Roll(9);
+  FBowlingGame.Roll(1);
+
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+
+  FBowlingGame.Roll(8);
+  FBowlingGame.Roll(2);
+
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+  FBowlingGame.Roll(10);
+  Assert(FBowlingGame.TotalScore = 175);
+  Assert(FBowlingGame.GameOver);
 end;
 
 procedure TestTBowlingGame.TestPerfectGame;
@@ -65,6 +145,7 @@ begin
   FBowlingGame.Roll(10);
   FBowlingGame.Roll(10);
   Assert(FBowlingGame.TotalScore = 300);
+  Assert(FBowlingGame.GameOver);
 end;
 
 procedure TestTBowlingGame.TestRoll;
