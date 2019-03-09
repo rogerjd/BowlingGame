@@ -620,10 +620,34 @@ function TScoreCtrl.GetScoreByFrame: TList<TScoreByFrame>;
 var
   frame: TFrame;
   i: integer;
+  sbf: TScoreByFrame;
 
   function InitScoreByFrame(): TScoreByFrame;
+
+    function GetFrameStaus(): string;
+    begin
+      if frame.FrameRollsCtrl.Over then
+      begin
+        if frame.Scored then
+          Result := 'Scored'
+        else
+          Result := 'Pending';
+      end
+      else
+      begin
+        if frame.FrameRollsCtrl.FrameRolls.Count > 0 then
+          Result := 'In Play'
+        else
+          Result := '';
+      end;
+    end;
+
   begin
-    
+    with Result do
+    begin
+      Number := frame.Number;
+      StatusStatus := GetFrameStaus();
+    end;
   end;
 
 begin
@@ -640,8 +664,18 @@ begin
   end;
 
   // get pending frames
+  for i := 0 to Pending.FramesPending.Count - 1 do
+  begin
+    frame := Pending.FramesPending[i].FramesCtrl.Frames // todo: make common?
+      [Pending.FramesPending[i].FrameNum];
+    ScoreByFrames.Add(InitScoreByFrame())
+  end;
 
   // current in progress
+  frame := FramesCtrl.Frames[FramesCtrl.CurrentFrame];
+  sbf := InitScoreByFrame();
+  if sbf.StatusStatus = 'In Play' then
+    ScoreByFrames.Add(InitScoreByFrame());
 
   Result := ScoreByFrames;
 end;

@@ -2,11 +2,11 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2019/03/05 10:45:28.000.294,=C:\Users\Roger\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/03/05 10:46:18.000.260,C:\Users\Roger\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\Roger\Documents\Embarcadero\Studio\Projects\MainForm.pas</Transaction>
-    <Transaction>2019/03/05 10:46:18.000.260,C:\Users\Roger\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\Roger\Documents\Embarcadero\Studio\Projects\MainForm.dfm</Transaction>
+    <Transaction>2019/03/05 10:46:18.000.260,C:\Users\Roger\Documents\Embarcadero\Studio\Projects\MainForm.pas=C:\Users\Roger\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/03/05 10:46:18.000.260,C:\Users\Roger\Documents\Embarcadero\Studio\Projects\MainForm.dfm=C:\Users\Roger\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
     <Transaction>2019/03/05 10:46:30.000.768,C:\Users\Roger\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\Roger\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
     <Transaction>2019/03/05 10:51:53.000.830,=C:\Users\Roger\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2019/03/05 11:13:54.000.717,C:\Users\Roger\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\Roger\Documents\Embarcadero\Studio\Projects\BowlingGame.pas</Transaction>
-    <Transaction>2019/03/07 17:49:40.000.936,C:\Users\Roger\Documents\Embarcadero\Studio\Projects\BowlingExercise.dproj=C:\Users\Roger\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2019/03/05 11:13:54.000.717,C:\Users\Roger\Documents\Embarcadero\Studio\Projects\BowlingGame.pas=C:\Users\Roger\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2019/03/07 17:49:40.000.936,C:\Users\Roger\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\Roger\Documents\Embarcadero\Studio\Projects\BowlingExercise.dproj</Transaction>
   </Transactions>
 </BorlandProject>

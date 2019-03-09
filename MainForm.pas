@@ -25,7 +25,7 @@ var
 implementation
 
 uses
-  BowlingGame;
+  BowlingGame, Generics.Collections;
 
 {$R *.dfm}
 
@@ -37,6 +37,7 @@ end;
 procedure TForm1.Button2Click(Sender: TObject);
 var
   bg: TBowlingGame;
+  sbf: TList<TScoreByFrame>;
 begin
   bg := TBowlingGame.Create();
   bg.Start();
@@ -45,6 +46,9 @@ begin
   bg.Roll(10);
   bg.Roll(7);
   bg.Roll(2);
+
+  sbf := bg.ScoreByFrame();
+
   bg.Free();
 end;
 

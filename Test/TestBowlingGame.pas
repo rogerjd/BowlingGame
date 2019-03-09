@@ -237,11 +237,31 @@ end;
 
 procedure TestTBowlingGame.TestScoreByFrame;
 var
-  sbf: TList<TScoreByFrame>;
+  sbfl: TList<TScoreByFrame>;
+  sbf: TScoreByFrame;
 begin
-  sbf := FBowlingGame.ScoreByFrame;
-  Assert(sbf.Count = 0);
-  // TODO: Validate method results
+  FBowlingGame.Roll(4);
+  Assert(FBowlingGame.TotalScore = 0);
+
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 1);
+  Assert(sbfl[0].StatusStatus = 'In Play');
+
+  FBowlingGame.Roll(5);
+  Assert(FBowlingGame.TotalScore = 9);
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 1);
+  sbf := sbfl[0];
+  Assert(sbf.StatusStatus = 'Scored');
+
+  FBowlingGame.Roll(2);
+  Assert(FBowlingGame.TotalScore = 9);
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 2);
+  sbf := sbfl[1];
+  Assert(sbf.StatusStatus = 'In Play');
+
+
 end;
 
 initialization
