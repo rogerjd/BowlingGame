@@ -132,10 +132,19 @@ type
     FramesCtrl: TFramesCtrl;
     ScoreCtrl: TScoreCtrl;
     GameOver: Boolean;
-    TotalScore: integer;
+
+    // starts a new game of bowling
     procedure Start();
+
+    // takes the number of pins knocked down for each roll
     procedure Roll(NumOfPins: integer);
+
+    //score for each frame that has occurred so far
     function ScoreByFrame(): integer;
+
+    //returns the total score for that game up to the given point
+    property TotalScore: integer read FTotalScore write FTotalScore;
+
     constructor Create();
     destructor Destroy(); override;
   end;
