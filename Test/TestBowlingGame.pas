@@ -26,6 +26,7 @@ type
   published
     procedure TestStart;
     procedure TestRoll;
+    procedure TestPerfectGame();
     procedure TestScoreByFrame;
   end;
 
@@ -47,6 +48,23 @@ end;
 procedure TestTBowlingGame.TestStart;
 begin
   // TODO: Validate method results
+end;
+
+procedure TestTBowlingGame.TestPerfectGame;
+begin
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  Assert(FBowlingGame.TotalScore = 300);
 end;
 
 procedure TestTBowlingGame.TestRoll;

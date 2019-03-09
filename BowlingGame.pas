@@ -604,7 +604,7 @@ begin
   // process pending score
   if Pending.Any then
   begin
-    for i := 0 to Pending.FramesPending.Count - 1 do
+    for i := Pending.FramesPending.Count - 1 downto 0  do
     begin
       if Pending.FramesPending[i].ReadyToScore() then
       begin
