@@ -30,6 +30,7 @@ type
     procedure TestAllGutterGame();
     procedure TestStrikeSpare();
     procedure TestAllSpareAndStrike();
+    procedure TestGame1();
     procedure TestScoreByFrame;
   end;
 
@@ -127,6 +128,40 @@ begin
   FBowlingGame.Roll(3);
   FBowlingGame.Roll(10);
   Assert(FBowlingGame.TotalScore = 175);
+  Assert(FBowlingGame.GameOver);
+end;
+
+procedure TestTBowlingGame.TestGame1;
+begin
+  FBowlingGame.Roll(9);
+  FBowlingGame.Roll(0);
+
+  FBowlingGame.Roll(2);
+  FBowlingGame.Roll(7);
+
+  FBowlingGame.Roll(10);
+
+  FBowlingGame.Roll(3);
+  FBowlingGame.Roll(6);
+
+  FBowlingGame.Roll(8);
+  FBowlingGame.Roll(1);
+
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+
+  FBowlingGame.Roll(5);
+  FBowlingGame.Roll(3);
+
+  FBowlingGame.Roll(6);
+  FBowlingGame.Roll(2);
+
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+
+  FBowlingGame.Roll(6);
+  FBowlingGame.Roll(3);
+  Assert(FBowlingGame.TotalScore = 111);
   Assert(FBowlingGame.GameOver);
 end;
 
