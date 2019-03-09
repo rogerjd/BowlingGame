@@ -136,7 +136,6 @@ type
     procedure Start();
     procedure Roll(NumOfPins: integer);
     function ScoreByFrame(): integer;
-    // todo: cumulative
     constructor Create();
     destructor Destroy(); override;
   end;
@@ -244,7 +243,7 @@ begin
 
   if not ValidInput() then
   begin
-    MessageDlg('Invalid input, Roll = ' + IntToStr(NumOfPins), mtInformation,
+    MessageDlg('Invalid input, Roll = ' + IntToStr(NumOfPins), mtError,
       [mbOK], 0);
     Exit;
   end;
@@ -271,7 +270,7 @@ end;
 
 function TBowlingGame.ScoreByFrame: integer;
 begin
-
+  //todo:
 end;
 
 procedure TBowlingGame.Start;
