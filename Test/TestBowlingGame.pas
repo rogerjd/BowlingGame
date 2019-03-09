@@ -261,7 +261,19 @@ begin
   sbf := sbfl[1];
   Assert(sbf.StatusStatus = 'In Play');
 
+  FBowlingGame.Roll(3);
+  Assert(FBowlingGame.TotalScore = 14);
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 2);
+  sbf := sbfl[1];
+  Assert(sbf.StatusStatus = 'Scored');
 
+  FBowlingGame.Roll(10);
+  Assert(FBowlingGame.TotalScore = 14);
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 3);
+  sbf := sbfl[2];
+  Assert(sbf.StatusStatus = 'Pending');
 end;
 
 initialization
