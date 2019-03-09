@@ -116,10 +116,20 @@ type
     destructor Destroy; override;
   end;
 
+  // TScoreStatus = (ssScored, ssPendingFutureFrame, ssWFInProgress);
+  TScoreByFrame = record
+    Number: integer;
+    StatusStatus: string;
+    FrameScore, GameScore: integer;
+  end;
+
   TScoreCtrl = class
     FramesCtrl: TFramesCtrl;
     Pending: TPendingFrames;
+    ScoreByFrames: TList<TScoreByFrame>;
     procedure Score();
+    procedure Init();
+    function GetScoreByFrame(): TList<TScoreByFrame>;
     constructor Create(xFramesCtrl: TFramesCtrl);
     destructor Destroy(); override;
   end;
@@ -139,10 +149,10 @@ type
     // takes the number of pins knocked down for each roll
     procedure Roll(NumOfPins: integer);
 
-    //score for each frame that has occurred so far
-    function ScoreByFrame(): integer;
+    // score for each frame that has occurred so far
+    function ScoreByFrame(): TList<TScoreByFrame>;
 
-    //returns the total score for that game up to the given point
+    // returns the total score for that game up to the given point
     property TotalScore: integer read FTotalScore write FTotalScore;
 
     constructor Create();
@@ -277,15 +287,17 @@ begin
   end;
 end;
 
-function TBowlingGame.ScoreByFrame: integer;
+function TBowlingGame.ScoreByFrame: TList<TScoreByFrame>;
 begin
-  //todo:
+  // todo:
+  Result := ScoreCtrl.GetScoreByFrame();
 end;
 
 procedure TBowlingGame.Start;
 begin
   GameOver := False;
-  FramesCtrl.Init();
+  // FramesCtrl.Init();
+  ScoreCtrl.Init();
 end;
 
 { TFrame }
@@ -594,12 +606,51 @@ constructor TScoreCtrl.Create(xFramesCtrl: TFramesCtrl);
 begin
   FramesCtrl := xFramesCtrl;
   Pending := TPendingFrames.Create();
+  ScoreByFrames := TList<TScoreByFrame>.Create();
 end;
 
 destructor TScoreCtrl.Destroy;
 begin
   Pending.Free();
+  ScoreByFrames.Free();
   inherited;
+end;
+
+function TScoreCtrl.GetScoreByFrame: TList<TScoreByFrame>;
+var
+  frame: TFrame;
+  i: integer;
+
+  function InitScoreByFrame(): TScoreByFrame;
+  begin
+    
+  end;
+
+begin
+  ScoreByFrames.Clear();
+
+  // get frames scored so far
+  for i := 1 to 10 do
+  begin
+    frame := FramesCtrl.Frames[i];
+    if frame.Scored then
+      ScoreByFrames.Add(InitScoreByFrame())
+    else
+      Break;
+  end;
+
+  // get pending frames
+
+  // current in progress
+
+  Result := ScoreByFrames;
+end;
+
+procedure TScoreCtrl.Init;
+begin
+  FramesCtrl.Init();
+  Pending.FramesPending.Clear();
+  ScoreByFrames.Clear();
 end;
 
 procedure TScoreCtrl.Score;
@@ -612,7 +663,7 @@ begin
   // process pending score
   if Pending.Any then
   begin
-    for i := Pending.FramesPending.Count - 1 downto 0  do
+    for i := Pending.FramesPending.Count - 1 downto 0 do
     begin
       if Pending.FramesPending[i].ReadyToScore() then
       begin

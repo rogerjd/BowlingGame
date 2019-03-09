@@ -237,9 +237,10 @@ end;
 
 procedure TestTBowlingGame.TestScoreByFrame;
 var
-  ReturnValue: Integer;
+  sbf: TList<TScoreByFrame>;
 begin
-  ReturnValue := FBowlingGame.ScoreByFrame;
+  sbf := FBowlingGame.ScoreByFrame;
+  Assert(sbf.Count = 0);
   // TODO: Validate method results
 end;
 
