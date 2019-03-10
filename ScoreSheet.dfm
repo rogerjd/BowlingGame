@@ -1,4 +1,4 @@
-object Form2: TForm2
+object ScoreSheetForm: TScoreSheetForm
   Left = 0
   Top = 0
   ActiveControl = Button0
@@ -153,61 +153,40 @@ object Form2: TForm2
       Transparent = False
       ExplicitWidth = 7
     end
-    object Panel2: TPanel
-      Left = 40
+    object Panel1a: TPanel
+      Left = 41
       Top = 19
-      Width = 40
+      Width = 17
       Height = 30
       BevelKind = bkTile
       BevelOuter = bvNone
-      Caption = 'Panel2'
       TabOrder = 0
     end
-    object Panel3: TPanel
-      Left = 0
-      Top = 0
-      Width = 81
-      Height = 81
+    object Panel1b: TPanel
+      Left = 64
+      Top = 19
+      Width = 17
+      Height = 30
+      BevelKind = bkTile
       BevelOuter = bvNone
       TabOrder = 1
-      object Label2: TLabel
-        Left = 0
-        Top = 0
-        Width = 81
-        Height = 13
-        Align = alTop
-        Alignment = taCenter
-        Caption = '1'
-        Color = clMoneyGreen
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentColor = False
-        ParentFont = False
-        Transparent = False
-        ExplicitWidth = 7
-      end
-      object Panel4: TPanel
-        Left = 40
-        Top = 19
-        Width = 40
-        Height = 30
-        BevelKind = bkTile
-        BevelOuter = bvNone
-        Caption = 'Panel2'
-        TabOrder = 0
-      end
+    end
+    object Panel1c: TPanel
+      Left = 18
+      Top = 55
+      Width = 63
+      Height = 24
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 2
     end
   end
-  object Panel7: TPanel
+  object Panel4: TPanel
     Left = 292
     Top = 104
     Width = 81
     Height = 81
     BevelOuter = bvNone
-    Caption = 'z'
     TabOrder = 12
     object Label4: TLabel
       Left = 0
@@ -228,7 +207,7 @@ object Form2: TForm2
       Transparent = False
       ExplicitWidth = 7
     end
-    object Panel8: TPanel
+    object Panel4a: TPanel
       Left = 40
       Top = 19
       Width = 40
@@ -239,13 +218,12 @@ object Form2: TForm2
       TabOrder = 0
     end
   end
-  object Panel9: TPanel
-    Left = 205
+  object Panel3: TPanel
+    Left = 206
     Top = 104
     Width = 81
     Height = 81
     BevelOuter = bvNone
-    Caption = 'z'
     TabOrder = 13
     object Label5: TLabel
       Left = 0
@@ -266,7 +244,7 @@ object Form2: TForm2
       Transparent = False
       ExplicitWidth = 7
     end
-    object Panel10: TPanel
+    object Panel3a: TPanel
       Left = 40
       Top = 19
       Width = 40
@@ -277,13 +255,12 @@ object Form2: TForm2
       TabOrder = 0
     end
   end
-  object Panel11: TPanel
+  object Panel2: TPanel
     Left = 119
     Top = 104
     Width = 81
     Height = 81
     BevelOuter = bvNone
-    Caption = 'z'
     TabOrder = 14
     object Label6: TLabel
       Left = 0
@@ -315,13 +292,12 @@ object Form2: TForm2
       TabOrder = 0
     end
   end
-  object Panel13: TPanel
+  object Panel7: TPanel
     Left = 553
     Top = 104
     Width = 81
     Height = 81
     BevelOuter = bvNone
-    Caption = 'z'
     TabOrder = 15
     object Label7: TLabel
       Left = 0
@@ -353,13 +329,12 @@ object Form2: TForm2
       TabOrder = 0
     end
   end
-  object Panel15: TPanel
+  object Panel6: TPanel
     Left = 466
     Top = 104
     Width = 81
     Height = 81
     BevelOuter = bvNone
-    Caption = 'z'
     TabOrder = 16
     object Label8: TLabel
       Left = 0
@@ -391,13 +366,12 @@ object Form2: TForm2
       TabOrder = 0
     end
   end
-  object Panel17: TPanel
+  object Panel5: TPanel
     Left = 379
     Top = 104
     Width = 81
     Height = 81
     BevelOuter = bvNone
-    Caption = 'z'
     TabOrder = 17
     object Label9: TLabel
       Left = 0
@@ -429,13 +403,12 @@ object Form2: TForm2
       TabOrder = 0
     end
   end
-  object Panel19: TPanel
-    Left = 812
+  object Panel10: TPanel
+    Left = 813
     Top = 104
     Width = 81
     Height = 81
     BevelOuter = bvNone
-    Caption = 'z'
     TabOrder = 18
     object Label10: TLabel
       Left = 0
@@ -467,13 +440,12 @@ object Form2: TForm2
       TabOrder = 0
     end
   end
-  object Panel21: TPanel
+  object Panel9: TPanel
     Left = 726
     Top = 104
     Width = 81
     Height = 81
     BevelOuter = bvNone
-    Caption = 'z'
     TabOrder = 19
     object Label11: TLabel
       Left = 0
@@ -505,13 +477,12 @@ object Form2: TForm2
       TabOrder = 0
     end
   end
-  object Panel23: TPanel
-    Left = 640
+  object Panel8: TPanel
+    Left = 639
     Top = 104
     Width = 81
     Height = 81
     BevelOuter = bvNone
-    Caption = 'z'
     TabOrder = 20
     object Label12: TLabel
       Left = 0

@@ -4,7 +4,7 @@ uses
   Vcl.Forms,
   MainForm in 'MainForm.pas' {Form1} ,
   BowlingGame in 'BowlingGame.pas',
-  ScoreSheet in 'ScoreSheet.pas' {Form2};
+  ScoreSheet in 'ScoreSheet.pas' {ScoreSheetForm};
 
 {$R *.res}
 
@@ -13,7 +13,7 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TScoreSheetForm, ScoreSheetForm);
   Application.Run;
 
 end.

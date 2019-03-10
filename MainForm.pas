@@ -11,8 +11,10 @@ type
   TForm1 = class(TForm)
     Button1: TButton;
     Button2: TButton;
+    Button3: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -25,7 +27,7 @@ var
 implementation
 
 uses
-  BowlingGame, Generics.Collections;
+  BowlingGame, Generics.Collections, ScoreSheet;
 
 {$R *.dfm}
 
@@ -50,6 +52,15 @@ begin
   sbf := bg.ScoreByFrame();
 
   bg.Free();
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+var
+  frm: TScoreSheetForm;
+begin
+  frm := TScoreSheetForm.Create(nil);
+  frm.ShowModal();
+  frm.Free();
 end;
 
 end.

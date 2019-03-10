@@ -104,7 +104,7 @@
         </DCCReference>
         <DCCReference Include="BowlingGame.pas"/>
         <DCCReference Include="ScoreSheet.pas">
-            <Form>Form2</Form>
+            <Form>ScoreSheetForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">

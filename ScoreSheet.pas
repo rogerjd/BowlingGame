@@ -9,7 +9,7 @@ uses
   Generics.Collections;
 
 type
-  TForm2 = class(TForm)
+  TScoreSheetForm = class(TForm)
     Button0: TButton;
     Button1: TButton;
     Button2: TButton;
@@ -23,90 +23,158 @@ type
     Button10: TButton;
     Panel1: TPanel;
     Label1: TLabel;
-    Panel2: TPanel;
-    Panel3: TPanel;
-    Label2: TLabel;
+    Panel1a: TPanel;
     Panel4: TPanel;
-    Panel7: TPanel;
     Label4: TLabel;
-    Panel8: TPanel;
-    Panel9: TPanel;
+    Panel4a: TPanel;
+    Panel3: TPanel;
     Label5: TLabel;
-    Panel10: TPanel;
-    Panel11: TPanel;
+    Panel3a: TPanel;
+    Panel2: TPanel;
     Label6: TLabel;
     Panel12: TPanel;
-    Panel13: TPanel;
+    Panel7: TPanel;
     Label7: TLabel;
     Panel14: TPanel;
-    Panel15: TPanel;
+    Panel6: TPanel;
     Label8: TLabel;
     Panel16: TPanel;
-    Panel17: TPanel;
+    Panel5: TPanel;
     Label9: TLabel;
     Panel18: TPanel;
-    Panel19: TPanel;
+    Panel10: TPanel;
     Label10: TLabel;
     Panel20: TPanel;
-    Panel21: TPanel;
+    Panel9: TPanel;
     Label11: TLabel;
     Panel22: TPanel;
-    Panel23: TPanel;
+    Panel8: TPanel;
     Label12: TLabel;
     Panel24: TPanel;
+    Panel1b: TPanel;
+    Panel1c: TPanel;
     procedure Button0Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure MakeArrays();
   private
     { Private declarations }
     Buttons: array [0 .. 10] of TButton;
+    Frames: array [1 .. 10] of TPanel;
     Game: TBowlingGame;
     CurrentFrame: Integer;
     PendingFrames: TList<Integer>;
+    sbf: TScoreByFrame;
 
-    procedure UpdateFrame();
+    procedure UpdateFrame(Number: Integer);
+    procedure UpdateValidButtons();
   public
     { Public declarations }
   end;
 
 var
-  Form2: TForm2;
+  ScoreSheetForm: TScoreSheetForm;
 
 implementation
 
-
 {$R *.dfm}
 
-procedure TForm2.Button0Click(Sender: TObject);
+procedure TScoreSheetForm.Button0Click(Sender: TObject);
 var
   n: Integer;
   sbfl: TList<TScoreByFrame>;
-  sbf: TScoreByFrame;
 begin
   n := (Sender as TComponent).Tag;
   Game.Roll(n);
 
   sbfl := Game.ScoreByFrame();
+  // do pending first
+  sbf := sbfl[0];
+  UpdateFrame(CurrentFrame);
 
-
+  UpdateValidButtons();
 end;
 
-procedure TForm2.FormCreate(Sender: TObject);
+procedure TScoreSheetForm.FormCreate(Sender: TObject);
 begin
   PendingFrames := TList<Integer>.Create();
+  CurrentFrame := 1;
+  MakeArrays();
   Game := TBowlingGame.Create();
   Game.Start();
 end;
 
-procedure TForm2.FormDestroy(Sender: TObject);
+procedure TScoreSheetForm.FormDestroy(Sender: TObject);
 begin
   PendingFrames.Free();
   Game.Free();
 end;
 
-procedure TForm2.UpdateFrame;
-begin
+procedure TScoreSheetForm.MakeArrays;
 
+  procedure MakeButtonsArray();
+  var
+    i: Integer;
+  begin
+    Buttons[0] := Button0;
+    Buttons[1] := Button1;
+    Buttons[2] := Button2;
+    Buttons[3] := Button3;
+    Buttons[4] := Button4;
+    Buttons[5] := Button5;
+    Buttons[6] := Button6;
+    Buttons[7] := Button7;
+    Buttons[8] := Button8;
+    Buttons[9] := Button9;
+    Buttons[10] := Button10;
+  end;
+
+  procedure MakeFramesArray();
+  begin
+    Frames[1] := Panel1;
+    Frames[2] := Panel2;
+    Frames[3] := Panel3;
+    Frames[4] := Panel4;
+    Frames[5] := Panel5;
+    Frames[6] := Panel6;
+    Frames[7] := Panel7;
+    Frames[8] := Panel8;
+    Frames[9] := Panel9;
+    Frames[10] := Panel10;
+  end;
+
+begin
+  MakeButtonsArray();
+  MakeFramesArray();
+end;
+
+procedure TScoreSheetForm.UpdateFrame(Number: Integer);
+var
+  frm: TPanel;
+
+  boxA, boxB, boxTot, box: TPanel;
+
+  function Get(box: char): TPanel;
+  begin
+    Result := TPanel(self.FindComponent('Panel' +
+      IntToStr(CurrentFrame) + box));
+  end;
+
+begin
+  frm := Frames[CurrentFrame];
+  box := Get('a');
+  box.Caption := sbf.FrameScore;
+
+end;
+
+procedure TScoreSheetForm.UpdateValidButtons;
+var
+  i: Integer;
+begin
+  for i := 0 to 10 do
+    Buttons[i].Enabled := False;
+  for i := 0 to Game.FramesCtrl.GetCurrent.NumPinsStanding do
+    Buttons[i].Enabled := True;
 end;
 
 end.
