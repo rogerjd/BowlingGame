@@ -36,6 +36,7 @@ type
     function GetScore: integer;
     function NumPinsToRollTotal(NumPins: integer): TRollTotal;
     function RollTotalToNumberOfPins(RollTotal: TRollTotal): integer;
+    function RollTotalAsString(RollTotal: TRollTotal): string;
   public
     property Score: integer read GetScore;
     procedure RecordRoll(NumPins: integer);
@@ -119,10 +120,10 @@ type
   // TScoreStatus = (ssScored, ssPendingFutureFrame, ssWFInProgress);
   TScoreByFrame = record
     Number: integer;
-    StatusStatus: string;
+    Status: string;
     GameScore: integer;
     FrameScore: string;
-    FrameScoreInPoints: Integer;
+    FrameScoreInPoints: integer;
   end;
 
   TScoreCtrl = class
@@ -591,6 +592,18 @@ begin
       ((not frame.OpenFrame) and (FrameRolls.Count = 3));
 end;
 
+function TFrameRollsCtrl.RollTotalAsString(RollTotal: TRollTotal): string;
+begin
+  case RollTotal of
+    rtZero .. rtNine:
+      Result := IntToStr(ord(RollTotal));
+    rtStrike:
+      Result := 'X';
+    rtSpare:
+      Result := '/';
+  end;
+end;
+
 function TFrameRollsCtrl.RollTotalToNumberOfPins(RollTotal: TRollTotal)
   : integer;
 begin
@@ -623,7 +636,7 @@ var
   frame: TFrame;
   i: integer;
   sbf: TScoreByFrame;
-  TotalScore: Integer;
+  TotalScore: integer;
 
   function InitScoreByFrame(): TScoreByFrame;
 
@@ -649,10 +662,20 @@ var
     with Result do
     begin
       Number := frame.Number;
-      StatusStatus := GetFrameStaus();
+      Status := GetFrameStaus();
       FrameScoreInPoints := frame.Score;
       Inc(TotalScore, frame.Score);
       GameScore := TotalScore;
+
+      if Status <> '' then // todo: use fmt?
+      begin
+        FrameScore := frame.FrameRollsCtrl.RollTotalAsString
+          (frame.FrameRollsCtrl.FrameRolls[0]);
+        if frame.FrameRollsCtrl.FrameRolls.Count = 2 then
+          FrameScore := FrameScore + ' ' +
+            frame.FrameRollsCtrl.RollTotalAsString
+            (frame.FrameRollsCtrl.FrameRolls[1]);
+      end;
     end;
   end;
 
@@ -681,7 +704,7 @@ begin
   // current in progress
   frame := FramesCtrl.Frames[FramesCtrl.CurrentFrame];
   sbf := InitScoreByFrame();
-  if sbf.StatusStatus = 'In Play' then
+  if sbf.Status = 'In Play' then
     ScoreByFrames.Add(InitScoreByFrame());
 
   Result := ScoreByFrames;
