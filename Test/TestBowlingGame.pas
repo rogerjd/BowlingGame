@@ -240,6 +240,9 @@ var
   sbfl: TList<TScoreByFrame>;
   sbf: TScoreByFrame;
 begin
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 0);
+
   FBowlingGame.Roll(4);
   Assert(FBowlingGame.TotalScore = 0);
 
@@ -255,6 +258,7 @@ begin
   sbf := sbfl[0];
   Assert(sbf.StatusStatus = 'Scored');
   Assert(sbfl[0].Number = 1);
+  // 1
 
   FBowlingGame.Roll(2);
   Assert(FBowlingGame.TotalScore = 9);
@@ -271,6 +275,7 @@ begin
   sbf := sbfl[1];
   Assert(sbf.StatusStatus = 'Scored');
   Assert(sbf.Number = 2);
+  // 2
 
   FBowlingGame.Roll(10);
   Assert(FBowlingGame.TotalScore = 14);
@@ -279,6 +284,135 @@ begin
   sbf := sbfl[2];
   Assert(sbf.StatusStatus = 'Pending');
   Assert(sbf.Number = 3);
+  // 3
+
+  FBowlingGame.Roll(10);
+  Assert(FBowlingGame.TotalScore = 14);
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 4);
+  sbf := sbfl[3];
+  Assert(sbf.StatusStatus = 'Pending');
+  Assert(sbf.Number = 4);
+  // 4
+
+  FBowlingGame.Roll(10);
+  Assert(FBowlingGame.TotalScore = 44);
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 5);
+  sbf := sbfl[4];
+  Assert(sbf.StatusStatus = 'Pending');
+  Assert(sbf.Number = 5);
+  // 5
+
+  FBowlingGame.Roll(10);
+  Assert(FBowlingGame.TotalScore = 74);
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 6);
+  sbf := sbfl[5];
+  Assert(sbf.StatusStatus = 'Pending');
+  Assert(sbf.Number = 6);
+  // 6
+
+  FBowlingGame.Roll(10);
+  Assert(FBowlingGame.TotalScore = 104);
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 7);
+  sbf := sbfl[6];
+  Assert(sbf.StatusStatus = 'Pending');
+  Assert(sbf.Number = 7);
+  // 7
+
+  FBowlingGame.Roll(10);
+  Assert(FBowlingGame.TotalScore = 134);
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 8);
+  sbf := sbfl[7];
+  Assert(sbf.StatusStatus = 'Pending');
+  Assert(sbf.Number = 8);
+  // 8
+
+  FBowlingGame.Roll(10);
+  Assert(FBowlingGame.TotalScore = 164);
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 9);
+  sbf := sbfl[8];
+  Assert(sbf.StatusStatus = 'Pending');
+  Assert(sbf.Number = 9);
+  // 9
+
+  FBowlingGame.Roll(4);
+  Assert(FBowlingGame.TotalScore = 188);
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 10);
+  sbf := sbfl[9];
+  Assert(sbf.StatusStatus = 'In Play');
+  Assert(sbf.Number = 10);
+
+  FBowlingGame.Roll(3);
+  Assert(FBowlingGame.TotalScore = 212);
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 10);
+  sbf := sbfl[9];
+  Assert(sbf.StatusStatus = 'Scored');
+  Assert(sbf.Number = 10);
+  // 10
+
+  sbfl := FBowlingGame.ScoreByFrame();
+  sbf := sbfl[0];
+  Assert(sbf.StatusStatus = 'Scored');
+  Assert(sbf.Number = 1);
+  Assert(sbf.GameScore = 9);
+
+  sbf := sbfl[1];
+  Assert(sbf.StatusStatus = 'Scored');
+  Assert(sbf.Number = 2);
+  Assert(sbf.GameScore = 14);
+
+  sbf := sbfl[2];
+  Assert(sbf.StatusStatus = 'Scored');
+  Assert(sbf.Number = 3);
+  Assert(sbf.GameScore = 44);
+
+  sbf := sbfl[3];
+  Assert(sbf.StatusStatus = 'Scored');
+  Assert(sbf.Number = 4);
+  Assert(sbf.GameScore = 74);
+
+  sbf := sbfl[3];
+  Assert(sbf.StatusStatus = 'Scored');
+  Assert(sbf.Number = 4);
+  Assert(sbf.GameScore = 74);
+
+  sbf := sbfl[4];
+  Assert(sbf.StatusStatus = 'Scored');
+  Assert(sbf.Number = 5);
+  Assert(sbf.GameScore = 104);
+
+  sbf := sbfl[5];
+  Assert(sbf.StatusStatus = 'Scored');
+  Assert(sbf.Number = 6);
+  Assert(sbf.GameScore = 134);
+
+  sbf := sbfl[6];
+  Assert(sbf.StatusStatus = 'Scored');
+  Assert(sbf.Number = 7);
+  Assert(sbf.GameScore = 164);
+
+  sbf := sbfl[7];
+  Assert(sbf.StatusStatus = 'Scored');
+  Assert(sbf.Number = 8);
+  Assert(sbf.GameScore = 188);
+
+  sbf := sbfl[8];
+  Assert(sbf.StatusStatus = 'Scored');
+  Assert(sbf.Number = 9);
+  Assert(sbf.GameScore = 205);
+
+  sbf := sbfl[9];
+  Assert(sbf.StatusStatus = 'Scored');
+  Assert(sbf.Number = 10);
+  Assert(sbf.GameScore = 212);
+
 end;
 
 initialization

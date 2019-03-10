@@ -120,7 +120,9 @@ type
   TScoreByFrame = record
     Number: integer;
     StatusStatus: string;
-    FrameScore, GameScore: integer;
+    GameScore: integer;
+    FrameScore: string;
+    FrameScoreInPoints: Integer;
   end;
 
   TScoreCtrl = class
@@ -621,6 +623,7 @@ var
   frame: TFrame;
   i: integer;
   sbf: TScoreByFrame;
+  TotalScore: Integer;
 
   function InitScoreByFrame(): TScoreByFrame;
 
@@ -647,11 +650,15 @@ var
     begin
       Number := frame.Number;
       StatusStatus := GetFrameStaus();
+      FrameScoreInPoints := frame.Score;
+      Inc(TotalScore, frame.Score);
+      GameScore := TotalScore;
     end;
   end;
 
 begin
   ScoreByFrames.Clear();
+  TotalScore := 0;
 
   // get frames scored so far
   for i := 1 to 10 do
