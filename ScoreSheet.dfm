@@ -206,6 +206,32 @@ object ScoreSheetForm: TScoreSheetForm
       Transparent = False
       ExplicitWidth = 7
     end
+    object Panel4a: TPanel
+      Left = 48
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelOuter = bvNone
+      TabOrder = 0
+    end
+    object Panel4b: TPanel
+      Left = 64
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 1
+    end
+    object Panel4c: TPanel
+      Left = 0
+      Top = 47
+      Width = 81
+      Height = 34
+      Align = alBottom
+      BevelOuter = bvNone
+      TabOrder = 2
+    end
   end
   object Panel3: TPanel
     Left = 206
@@ -241,7 +267,6 @@ object ScoreSheetForm: TScoreSheetForm
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitTop = 48
     end
     object Panel3a: TPanel
       Left = 48
@@ -340,6 +365,33 @@ object ScoreSheetForm: TScoreSheetForm
       Transparent = False
       ExplicitWidth = 7
     end
+    object Panel7b: TPanel
+      Left = 64
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 0
+    end
+    object Panel7a: TPanel
+      Left = 48
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelOuter = bvNone
+      TabOrder = 1
+    end
+    object Panel7c: TPanel
+      Left = 0
+      Top = 47
+      Width = 81
+      Height = 34
+      Align = alBottom
+      BevelOuter = bvNone
+      TabOrder = 2
+      ExplicitTop = 43
+    end
   end
   object Panel6: TPanel
     Left = 466
@@ -366,6 +418,33 @@ object ScoreSheetForm: TScoreSheetForm
       ParentFont = False
       Transparent = False
       ExplicitWidth = 7
+    end
+    object Panel6b: TPanel
+      Left = 64
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 0
+    end
+    object Panel6a: TPanel
+      Left = 48
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelOuter = bvNone
+      TabOrder = 1
+    end
+    object Panel6c: TPanel
+      Left = 0
+      Top = 47
+      Width = 81
+      Height = 34
+      Align = alBottom
+      BevelOuter = bvNone
+      TabOrder = 2
+      ExplicitTop = 43
     end
   end
   object Panel5: TPanel
@@ -394,6 +473,33 @@ object ScoreSheetForm: TScoreSheetForm
       Transparent = False
       ExplicitWidth = 7
     end
+    object Panel5a: TPanel
+      Left = 48
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelOuter = bvNone
+      TabOrder = 0
+    end
+    object Panel5b: TPanel
+      Left = 64
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 1
+    end
+    object Panel5c: TPanel
+      Left = 0
+      Top = 47
+      Width = 81
+      Height = 34
+      Align = alBottom
+      BevelOuter = bvNone
+      TabOrder = 2
+      ExplicitTop = 43
+    end
   end
   object Panel10: TPanel
     Left = 813
@@ -420,6 +526,33 @@ object ScoreSheetForm: TScoreSheetForm
       ParentFont = False
       Transparent = False
       ExplicitWidth = 14
+    end
+    object Panel10b: TPanel
+      Left = 64
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 0
+    end
+    object Panel10a: TPanel
+      Left = 48
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelOuter = bvNone
+      TabOrder = 1
+    end
+    object Panel10c: TPanel
+      Left = 0
+      Top = 47
+      Width = 81
+      Height = 34
+      Align = alBottom
+      BevelOuter = bvNone
+      TabOrder = 2
+      ExplicitTop = 43
     end
   end
   object Panel9: TPanel
@@ -448,6 +581,33 @@ object ScoreSheetForm: TScoreSheetForm
       Transparent = False
       ExplicitWidth = 7
     end
+    object Panel9b: TPanel
+      Left = 64
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 0
+    end
+    object Panel9a: TPanel
+      Left = 48
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelOuter = bvNone
+      TabOrder = 1
+    end
+    object Panel9c: TPanel
+      Left = 0
+      Top = 47
+      Width = 81
+      Height = 34
+      Align = alBottom
+      BevelOuter = bvNone
+      TabOrder = 2
+      ExplicitTop = 43
+    end
   end
   object Panel8: TPanel
     Left = 639
@@ -475,5 +635,41 @@ object ScoreSheetForm: TScoreSheetForm
       Transparent = False
       ExplicitWidth = 7
     end
+    object Panel8b: TPanel
+      Left = 64
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 0
+    end
+    object Panel8a: TPanel
+      Left = 48
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelOuter = bvNone
+      TabOrder = 1
+    end
+    object Panel8c: TPanel
+      Left = 0
+      Top = 47
+      Width = 81
+      Height = 34
+      Align = alBottom
+      BevelOuter = bvNone
+      TabOrder = 2
+      ExplicitTop = 43
+    end
+  end
+  object btnNewGame: TButton
+    Left = 720
+    Top = 40
+    Width = 75
+    Height = 25
+    Caption = 'New Game'
+    TabOrder = 21
+    OnClick = btnNewGameClick
   end
 end

@@ -50,12 +50,35 @@ type
     Panel3c: TPanel;
     Panel3a: TPanel;
     Panel3b: TPanel;
+    btnNewGame: TButton;
+    Panel4a: TPanel;
+    Panel4b: TPanel;
+    Panel4c: TPanel;
+    Panel5a: TPanel;
+    Panel5b: TPanel;
+    Panel5c: TPanel;
+    Panel6b: TPanel;
+    Panel7b: TPanel;
+    Panel8b: TPanel;
+    Panel9b: TPanel;
+    Panel10b: TPanel;
+    Panel6a: TPanel;
+    Panel7a: TPanel;
+    Panel8a: TPanel;
+    Panel9a: TPanel;
+    Panel10a: TPanel;
+    Panel6c: TPanel;
+    Panel7c: TPanel;
+    Panel8c: TPanel;
+    Panel9c: TPanel;
+    Panel10c: TPanel;
     procedure Button0Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure MakeArrays();
     procedure NewGame();
     procedure ClearFrames();
+    procedure btnNewGameClick(Sender: TObject);
   private
     { Private declarations }
     Buttons: array [0 .. 10] of TButton;
@@ -78,6 +101,11 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TScoreSheetForm.btnNewGameClick(Sender: TObject);
+begin
+  NewGame();
+end;
 
 procedure TScoreSheetForm.Button0Click(Sender: TObject);
 var
