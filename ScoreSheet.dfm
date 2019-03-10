@@ -527,7 +527,7 @@ object ScoreSheetForm: TScoreSheetForm
       Transparent = False
       ExplicitWidth = 14
     end
-    object Panel10b: TPanel
+    object Panel10b2: TPanel
       Left = 64
       Top = 13
       Width = 17
@@ -537,7 +537,7 @@ object ScoreSheetForm: TScoreSheetForm
       TabOrder = 0
     end
     object Panel10a: TPanel
-      Left = 48
+      Left = 30
       Top = 13
       Width = 17
       Height = 24
@@ -553,6 +553,14 @@ object ScoreSheetForm: TScoreSheetForm
       BevelOuter = bvNone
       TabOrder = 2
       ExplicitTop = 43
+    end
+    object Panel10b: TPanel
+      Left = 48
+      Top = 13
+      Width = 17
+      Height = 24
+      BevelOuter = bvNone
+      TabOrder = 3
     end
   end
   object Panel9: TPanel

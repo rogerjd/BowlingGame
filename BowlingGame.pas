@@ -222,6 +222,7 @@ begin
   GameOver := False;
   // FramesCtrl.Init();
   ScoreCtrl.Init();
+  FramesCtrl.Init();
 end;
 
 { TFrame }
@@ -270,6 +271,7 @@ begin
   Score := 0;
   Scored := False;
   RunningTotal := 0;
+  FrameRollsCtrl.FrameRolls.Clear();
 end;
 
 function TFrame.GetOpenFrame: Boolean;

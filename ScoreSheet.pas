@@ -61,7 +61,7 @@ type
     Panel7b: TPanel;
     Panel8b: TPanel;
     Panel9b: TPanel;
-    Panel10b: TPanel;
+    Panel10b2: TPanel;
     Panel6a: TPanel;
     Panel7a: TPanel;
     Panel8a: TPanel;
@@ -72,6 +72,7 @@ type
     Panel8c: TPanel;
     Panel9c: TPanel;
     Panel10c: TPanel;
+    Panel10b: TPanel;
     procedure Button0Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -90,9 +91,9 @@ type
     PendingFrames: TList<Integer>;
     sbfl: TList<TScoreByFrame>;
 
-    procedure UpdateFrame(Number: Integer);
+    procedure UpdateFrame(FrameNumber: Integer);
     procedure UpdateValidButtons();
-    function GetBox(box: char; frame: Integer): TPanel;
+    function GetBox(box: string; frame: Integer): TPanel;
   public
     { Public declarations }
   end;
@@ -200,7 +201,7 @@ begin
   DisableButtons();
 end;
 
-function TScoreSheetForm.GetBox(box: char; frame: Integer): TPanel;
+function TScoreSheetForm.GetBox(box: string; frame: Integer): TPanel;
 begin
   Result := TPanel(self.FindComponent('Panel' + IntToStr(frame) + box));
 end;
@@ -251,34 +252,70 @@ begin
   UpdateValidButtons();
 end;
 
-procedure TScoreSheetForm.UpdateFrame(Number: Integer);
+procedure TScoreSheetForm.UpdateFrame(FrameNumber: Integer);
 var
-  boxA, boxB, boxTot: TPanel;
+  boxA, boxB, boxB2, boxTot: TPanel;
   sbfTemp: TScoreByFrame;
-begin
-  sbfTemp := sbfl[Number - 1];
 
-  boxA := GetBox('a', Number);
-  boxB := GetBox('b', Number);
-
-  if length(sbfTemp.FrameScore) = 1 then
+  procedure RegFrame();
   begin
-    if sbfTemp.FrameScore = 'X' then
-      boxB.Caption := sbfTemp.FrameScore[1]
+    boxA := GetBox('a', FrameNumber);
+    boxB := GetBox('b', FrameNumber);
+
+    if length(sbfTemp.FrameScore) = 1 then
+    begin
+      if sbfTemp.FrameScore = 'X' then
+        boxB.Caption := sbfTemp.FrameScore[1]
+      else
+        boxA.Caption := sbfTemp.FrameScore[1];
+    end
     else
+    begin
       boxA.Caption := sbfTemp.FrameScore[1];
-  end
-  else
-  begin
-    boxA.Caption := sbfTemp.FrameScore[1];
-    boxB.Caption := sbfTemp.FrameScore[3];
+      boxB.Caption := sbfTemp.FrameScore[3];
+    end;
+
+    if sbfTemp.Status = 'Scored' then
+    begin
+      boxTot := GetBox('c', FrameNumber);
+      boxTot.Caption := IntToStr(sbfTemp.GameScore);
+    end;
   end;
 
-  if sbfTemp.Status = 'Scored' then
+  procedure FinalFrame();
   begin
-    boxTot := GetBox('c', Number);
-    boxTot.Caption := IntToStr(sbfTemp.GameScore);
+    boxA := GetBox('a', FrameNumber);
+    boxB := GetBox('b', FrameNumber);
+    boxB2 := GetBox('b2', FrameNumber);
+
+    if length(sbfTemp.FrameScore) = 1 then
+      boxA.Caption := sbfTemp.FrameScore[1]
+    else if length(sbfTemp.FrameScore) = 3 then
+    begin
+      boxA.Caption := sbfTemp.FrameScore[1];
+      boxB.Caption := sbfTemp.FrameScore[3];
+    end
+    else if length(sbfTemp.FrameScore) = 5 then
+    begin
+      boxA.Caption := sbfTemp.FrameScore[1];
+      boxB.Caption := sbfTemp.FrameScore[3];
+      boxB2.Caption := sbfTemp.FrameScore[5];
+    end;
+
+    if sbfTemp.Status = 'Scored' then
+    begin
+      boxTot := GetBox('c', FrameNumber);
+      boxTot.Caption := IntToStr(sbfTemp.GameScore);
+    end;
   end;
+
+begin
+  sbfTemp := sbfl[FrameNumber - 1];
+  if sbfTemp.Number < 10 then
+    RegFrame()
+  else
+    FinalFrame();
+
 end;
 
 procedure TScoreSheetForm.UpdateValidButtons;

@@ -24,4 +24,5 @@ uses
 begin
   ReportMemoryLeaksOnShutdown := DebugHook <> 0;
   DUnitTestRunner.RunRegisteredTests;
+
 end.
