@@ -1,10 +1,12 @@
 object Form2: TForm2
   Left = 0
   Top = 0
-  Caption = 'Form2'
+  Caption = 'p'
   ClientHeight = 290
   ClientWidth = 806
   Color = clBtnFace
+  TransparentColor = True
+  TransparentColorValue = clMoneyGreen
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -100,5 +102,42 @@ object Form2: TForm2
     Height = 25
     Caption = '10'
     TabOrder = 10
+  end
+  object Panel1: TPanel
+    Left = 32
+    Top = 104
+    Width = 81
+    Height = 81
+    BevelOuter = bvNone
+    TabOrder = 11
+    object Label1: TLabel
+      Left = 0
+      Top = 0
+      Width = 81
+      Height = 13
+      Align = alTop
+      Alignment = taCenter
+      Caption = '1'
+      Color = clMoneyGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+      ExplicitWidth = 7
+    end
+    object Panel2: TPanel
+      Left = 40
+      Top = 19
+      Width = 40
+      Height = 30
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      Caption = 'Panel2'
+      TabOrder = 0
+    end
   end
 end
