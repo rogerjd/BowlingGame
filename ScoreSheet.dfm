@@ -1,9 +1,10 @@
 object Form2: TForm2
   Left = 0
   Top = 0
-  Caption = 'p'
+  ActiveControl = Button0
+  Caption = 'Bowling Score Sheet'
   ClientHeight = 290
-  ClientWidth = 806
+  ClientWidth = 917
   Color = clBtnFace
   TransparentColor = True
   TransparentColorValue = clMoneyGreen
@@ -13,6 +14,8 @@ object Form2: TForm2
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object Button0: TButton
@@ -22,86 +25,107 @@ object Form2: TForm2
     Height = 25
     Caption = '0'
     TabOrder = 0
+    OnClick = Button0Click
   end
   object Button1: TButton
+    Tag = 1
     Left = 64
     Top = 40
     Width = 33
     Height = 25
     Caption = '1'
     TabOrder = 1
+    OnClick = Button0Click
   end
   object Button2: TButton
+    Tag = 2
     Left = 96
     Top = 40
     Width = 33
     Height = 25
     Caption = '2'
     TabOrder = 2
+    OnClick = Button0Click
   end
   object Button3: TButton
+    Tag = 3
     Left = 128
     Top = 40
     Width = 33
     Height = 25
     Caption = '3'
     TabOrder = 3
+    OnClick = Button0Click
   end
   object Button4: TButton
+    Tag = 4
     Left = 160
     Top = 40
     Width = 33
     Height = 25
     Caption = '4'
     TabOrder = 4
+    OnClick = Button0Click
   end
   object Button5: TButton
+    Tag = 5
     Left = 192
     Top = 40
     Width = 33
     Height = 25
     Caption = '5'
     TabOrder = 5
+    OnClick = Button0Click
   end
   object Button6: TButton
+    Tag = 6
     Left = 224
     Top = 40
     Width = 33
     Height = 25
     Caption = '6'
     TabOrder = 6
+    OnClick = Button0Click
   end
   object Button7: TButton
-    Left = 256
+    Tag = 7
+    Left = 253
     Top = 40
     Width = 33
     Height = 25
     Caption = '7'
     TabOrder = 7
+    OnClick = Button0Click
   end
   object Button8: TButton
+    Tag = 8
     Left = 288
     Top = 40
     Width = 33
     Height = 25
     Caption = '8'
     TabOrder = 8
+    OnClick = Button0Click
   end
   object Button9: TButton
+    Tag = 9
     Left = 320
     Top = 40
     Width = 33
     Height = 25
     Caption = '9'
     TabOrder = 9
+    OnClick = Button0Click
   end
   object Button10: TButton
+    Tag = 10
     Left = 352
     Top = 40
     Width = 33
     Height = 25
     Caption = '10'
     TabOrder = 10
+    OnClick = Button0Click
   end
   object Panel1: TPanel
     Left = 32
@@ -130,6 +154,385 @@ object Form2: TForm2
       ExplicitWidth = 7
     end
     object Panel2: TPanel
+      Left = 40
+      Top = 19
+      Width = 40
+      Height = 30
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      Caption = 'Panel2'
+      TabOrder = 0
+    end
+    object Panel3: TPanel
+      Left = 0
+      Top = 0
+      Width = 81
+      Height = 81
+      BevelOuter = bvNone
+      TabOrder = 1
+      object Label2: TLabel
+        Left = 0
+        Top = 0
+        Width = 81
+        Height = 13
+        Align = alTop
+        Alignment = taCenter
+        Caption = '1'
+        Color = clMoneyGreen
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Transparent = False
+        ExplicitWidth = 7
+      end
+      object Panel4: TPanel
+        Left = 40
+        Top = 19
+        Width = 40
+        Height = 30
+        BevelKind = bkTile
+        BevelOuter = bvNone
+        Caption = 'Panel2'
+        TabOrder = 0
+      end
+    end
+  end
+  object Panel7: TPanel
+    Left = 292
+    Top = 104
+    Width = 81
+    Height = 81
+    BevelOuter = bvNone
+    Caption = 'z'
+    TabOrder = 12
+    object Label4: TLabel
+      Left = 0
+      Top = 0
+      Width = 81
+      Height = 13
+      Align = alTop
+      Alignment = taCenter
+      Caption = '4'
+      Color = clMoneyGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+      ExplicitWidth = 7
+    end
+    object Panel8: TPanel
+      Left = 40
+      Top = 19
+      Width = 40
+      Height = 30
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      Caption = 'Panel2'
+      TabOrder = 0
+    end
+  end
+  object Panel9: TPanel
+    Left = 205
+    Top = 104
+    Width = 81
+    Height = 81
+    BevelOuter = bvNone
+    Caption = 'z'
+    TabOrder = 13
+    object Label5: TLabel
+      Left = 0
+      Top = 0
+      Width = 81
+      Height = 13
+      Align = alTop
+      Alignment = taCenter
+      Caption = '3'
+      Color = clMoneyGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+      ExplicitWidth = 7
+    end
+    object Panel10: TPanel
+      Left = 40
+      Top = 19
+      Width = 40
+      Height = 30
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      Caption = 'Panel2'
+      TabOrder = 0
+    end
+  end
+  object Panel11: TPanel
+    Left = 119
+    Top = 104
+    Width = 81
+    Height = 81
+    BevelOuter = bvNone
+    Caption = 'z'
+    TabOrder = 14
+    object Label6: TLabel
+      Left = 0
+      Top = 0
+      Width = 81
+      Height = 13
+      Align = alTop
+      Alignment = taCenter
+      Caption = '2'
+      Color = clMoneyGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+      ExplicitWidth = 7
+    end
+    object Panel12: TPanel
+      Left = 40
+      Top = 19
+      Width = 40
+      Height = 30
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      Caption = 'Panel2'
+      TabOrder = 0
+    end
+  end
+  object Panel13: TPanel
+    Left = 553
+    Top = 104
+    Width = 81
+    Height = 81
+    BevelOuter = bvNone
+    Caption = 'z'
+    TabOrder = 15
+    object Label7: TLabel
+      Left = 0
+      Top = 0
+      Width = 81
+      Height = 13
+      Align = alTop
+      Alignment = taCenter
+      Caption = '7'
+      Color = clMoneyGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+      ExplicitWidth = 7
+    end
+    object Panel14: TPanel
+      Left = 40
+      Top = 19
+      Width = 40
+      Height = 30
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      Caption = 'Panel2'
+      TabOrder = 0
+    end
+  end
+  object Panel15: TPanel
+    Left = 466
+    Top = 104
+    Width = 81
+    Height = 81
+    BevelOuter = bvNone
+    Caption = 'z'
+    TabOrder = 16
+    object Label8: TLabel
+      Left = 0
+      Top = 0
+      Width = 81
+      Height = 13
+      Align = alTop
+      Alignment = taCenter
+      Caption = '6'
+      Color = clMoneyGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+      ExplicitWidth = 7
+    end
+    object Panel16: TPanel
+      Left = 40
+      Top = 19
+      Width = 40
+      Height = 30
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      Caption = 'Panel2'
+      TabOrder = 0
+    end
+  end
+  object Panel17: TPanel
+    Left = 379
+    Top = 104
+    Width = 81
+    Height = 81
+    BevelOuter = bvNone
+    Caption = 'z'
+    TabOrder = 17
+    object Label9: TLabel
+      Left = 0
+      Top = 0
+      Width = 81
+      Height = 13
+      Align = alTop
+      Alignment = taCenter
+      Caption = '5'
+      Color = clMoneyGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+      ExplicitWidth = 7
+    end
+    object Panel18: TPanel
+      Left = 40
+      Top = 19
+      Width = 40
+      Height = 30
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      Caption = 'Panel2'
+      TabOrder = 0
+    end
+  end
+  object Panel19: TPanel
+    Left = 812
+    Top = 104
+    Width = 81
+    Height = 81
+    BevelOuter = bvNone
+    Caption = 'z'
+    TabOrder = 18
+    object Label10: TLabel
+      Left = 0
+      Top = 0
+      Width = 81
+      Height = 13
+      Align = alTop
+      Alignment = taCenter
+      Caption = '10'
+      Color = clMoneyGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+      ExplicitWidth = 14
+    end
+    object Panel20: TPanel
+      Left = 40
+      Top = 19
+      Width = 40
+      Height = 30
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      Caption = 'Panel2'
+      TabOrder = 0
+    end
+  end
+  object Panel21: TPanel
+    Left = 726
+    Top = 104
+    Width = 81
+    Height = 81
+    BevelOuter = bvNone
+    Caption = 'z'
+    TabOrder = 19
+    object Label11: TLabel
+      Left = 0
+      Top = 0
+      Width = 81
+      Height = 13
+      Align = alTop
+      Alignment = taCenter
+      Caption = '9'
+      Color = clMoneyGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+      ExplicitWidth = 7
+    end
+    object Panel22: TPanel
+      Left = 40
+      Top = 19
+      Width = 40
+      Height = 30
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      Caption = 'Panel2'
+      TabOrder = 0
+    end
+  end
+  object Panel23: TPanel
+    Left = 640
+    Top = 104
+    Width = 81
+    Height = 81
+    BevelOuter = bvNone
+    Caption = 'z'
+    TabOrder = 20
+    object Label12: TLabel
+      Left = 0
+      Top = 0
+      Width = 81
+      Height = 13
+      Align = alTop
+      Alignment = taCenter
+      Caption = '8'
+      Color = clMoneyGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+      ExplicitWidth = 7
+    end
+    object Panel24: TPanel
       Left = 40
       Top = 19
       Width = 40
