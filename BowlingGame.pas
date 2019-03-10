@@ -848,7 +848,12 @@ begin
 end;
 
 destructor TPendingFrames.Destroy;
+var
+  i: integer;
 begin
+  for i := FramesPending.Count - 1 downto 0 do
+    FramesPending[i].Free();
+
   FramesPending.Free();
   inherited;
 end;

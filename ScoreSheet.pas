@@ -145,7 +145,12 @@ begin
 end;
 
 procedure TScoreSheetForm.FormDestroy(Sender: TObject);
+var
+  i: Integer;
 begin
+  for i := PendingFrames.Count - 1 downto 0 do
+    PendingFrames.Delete(i);
+
   PendingFrames.Free();
   Game.Free();
 end;
