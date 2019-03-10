@@ -26,37 +26,36 @@ type
     Panel1a: TPanel;
     Panel4: TPanel;
     Label4: TLabel;
-    Panel4a: TPanel;
     Panel3: TPanel;
     Label5: TLabel;
-    Panel3a: TPanel;
     Panel2: TPanel;
     Label6: TLabel;
-    Panel12: TPanel;
     Panel7: TPanel;
     Label7: TLabel;
-    Panel14: TPanel;
     Panel6: TPanel;
     Label8: TLabel;
-    Panel16: TPanel;
     Panel5: TPanel;
     Label9: TLabel;
-    Panel18: TPanel;
     Panel10: TPanel;
     Label10: TLabel;
-    Panel20: TPanel;
     Panel9: TPanel;
     Label11: TLabel;
-    Panel22: TPanel;
     Panel8: TPanel;
     Label12: TLabel;
-    Panel24: TPanel;
     Panel1b: TPanel;
     Panel1c: TPanel;
+    Panel2a: TPanel;
+    Panel2b: TPanel;
+    Panel2c: TPanel;
+    Panel3c: TPanel;
+    Panel3a: TPanel;
+    Panel3b: TPanel;
     procedure Button0Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure MakeArrays();
+    procedure NewGame();
+    procedure ClearFrames();
   private
     { Private declarations }
     Buttons: array [0 .. 10] of TButton;
@@ -68,6 +67,7 @@ type
 
     procedure UpdateFrame(Number: Integer);
     procedure UpdateValidButtons();
+    function Get(box: char; frame: Integer): TPanel;
   public
     { Public declarations }
   end;
@@ -91,7 +91,8 @@ var
   begin
     for i := PendingFrames.Count - 1 downto 0 do
     begin
-      if sbfl[PendingFrames[i]].Status = 'Scored' then begin
+      if sbfl[PendingFrames[i]].Status = 'Scored' then
+      begin
         UpdateFrame(PendingFrames[i]);
         PendingFrames.Delete(i);
       end;
@@ -104,28 +105,54 @@ begin
   sbfl := Game.ScoreByFrame();
   UpdatePending();
 
-  sbf := sbfl[CurrentFrame];
+  sbf := sbfl[CurrentFrame - 1];
   if sbf.Status = 'Pending' then
     PendingFrames.Add(CurrentFrame);
 
   UpdateFrame(CurrentFrame);
 
   UpdateValidButtons();
+
+  if (sbf.Status = 'Scored') or (sbf.Status = 'Pending') then
+    Inc(CurrentFrame);
+end;
+
+procedure TScoreSheetForm.ClearFrames;
+var
+  i: Integer;
+  pnl: TPanel;
+begin
+  for i := 1 to 10 do
+  begin
+    pnl := Get('a', i);
+    pnl.Caption := '';
+
+    pnl := Get('b', i);
+    pnl.Caption := '';
+
+    pnl := Get('c', i);
+    pnl.Caption := '';
+  end;
 end;
 
 procedure TScoreSheetForm.FormCreate(Sender: TObject);
 begin
   PendingFrames := TList<Integer>.Create();
-  CurrentFrame := 1;
   MakeArrays();
   Game := TBowlingGame.Create();
   Game.Start();
+  NewGame();
 end;
 
 procedure TScoreSheetForm.FormDestroy(Sender: TObject);
 begin
   PendingFrames.Free();
   Game.Free();
+end;
+
+function TScoreSheetForm.Get(box: char; frame: Integer): TPanel;
+begin
+  Result := TPanel(self.FindComponent('Panel' + IntToStr(frame) + box));
 end;
 
 procedure TScoreSheetForm.MakeArrays;
@@ -166,19 +193,18 @@ begin
   MakeFramesArray();
 end;
 
+procedure TScoreSheetForm.NewGame;
+begin
+  CurrentFrame := 1;
+  ClearFrames();
+end;
+
 procedure TScoreSheetForm.UpdateFrame(Number: Integer);
 var
   boxA, boxB, boxTot: TPanel;
-
-  function Get(box: char): TPanel;
-  begin
-    Result := TPanel(self.FindComponent('Panel' +
-      IntToStr(CurrentFrame) + box));
-  end;
-
 begin
-  boxA := Get('a');
-  boxB := Get('b');
+  boxA := Get('a', Number);
+  boxB := Get('b', Number);
 
   if length(sbf.FrameScore) = 1 then
   begin
@@ -190,7 +216,7 @@ begin
   else
   begin
     boxA.Caption := sbf.FrameScore[1];
-    boxB.Caption := sbf.FrameScore[2];
+    boxB.Caption := sbf.FrameScore[3];
   end;
 end;
 
