@@ -83,13 +83,31 @@ procedure TScoreSheetForm.Button0Click(Sender: TObject);
 var
   n: Integer;
   sbfl: TList<TScoreByFrame>;
+
+  procedure UpdatePending();
+  var
+    tmp: TScoreByFrame;
+    i: Integer;
+  begin
+    for i := PendingFrames.Count - 1 downto 0 do
+    begin
+      if sbfl[PendingFrames[i]].Status = 'Scored' then begin
+        UpdateFrame(PendingFrames[i]);
+        PendingFrames.Delete(i);
+      end;
+    end;
+  end;
+
 begin
   n := (Sender as TComponent).Tag;
   Game.Roll(n);
-
   sbfl := Game.ScoreByFrame();
-  // do pending first
-  sbf := sbfl[0];
+  UpdatePending();
+
+  sbf := sbfl[CurrentFrame];
+  if sbf.Status = 'Pending' then
+    PendingFrames.Add(CurrentFrame);
+
   UpdateFrame(CurrentFrame);
 
   UpdateValidButtons();
@@ -150,9 +168,7 @@ end;
 
 procedure TScoreSheetForm.UpdateFrame(Number: Integer);
 var
-  frm: TPanel;
-
-  boxA, boxB, boxTot, box: TPanel;
+  boxA, boxB, boxTot: TPanel;
 
   function Get(box: char): TPanel;
   begin
@@ -161,10 +177,21 @@ var
   end;
 
 begin
-  frm := Frames[CurrentFrame];
-  box := Get('a');
-  box.Caption := sbf.FrameScore;
+  boxA := Get('a');
+  boxB := Get('b');
 
+  if length(sbf.FrameScore) = 1 then
+  begin
+    if sbf.FrameScore = 'X' then
+      boxB.Caption := sbf.FrameScore[1]
+    else
+      boxA.Caption := sbf.FrameScore[1];
+  end
+  else
+  begin
+    boxA.Caption := sbf.FrameScore[1];
+    boxB.Caption := sbf.FrameScore[2];
+  end;
 end;
 
 procedure TScoreSheetForm.UpdateValidButtons;
