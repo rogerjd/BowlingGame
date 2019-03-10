@@ -79,6 +79,8 @@ type
     procedure NewGame();
     procedure ClearFrames();
     procedure btnNewGameClick(Sender: TObject);
+    procedure GameOver();
+    procedure DisableButtons();
   private
     { Private declarations }
     Buttons: array [0 .. 10] of TButton;
@@ -143,6 +145,8 @@ begin
 
   if (sbf.Status = 'Scored') or (sbf.Status = 'Pending') then
     Inc(CurrentFrame);
+  if CurrentFrame > 10 then
+    GameOver();
 end;
 
 procedure TScoreSheetForm.ClearFrames;
@@ -163,6 +167,14 @@ begin
   end;
 end;
 
+procedure TScoreSheetForm.DisableButtons;
+var
+  i: Integer;
+begin
+  for i := 0 to 10 do
+    Buttons[i].Enabled := False;
+end;
+
 procedure TScoreSheetForm.FormCreate(Sender: TObject);
 begin
   PendingFrames := TList<Integer>.Create();
@@ -181,6 +193,11 @@ begin
 
   PendingFrames.Free();
   Game.Free();
+end;
+
+procedure TScoreSheetForm.GameOver;
+begin
+  DisableButtons();
 end;
 
 function TScoreSheetForm.Get(box: char; frame: Integer): TPanel;
@@ -230,6 +247,7 @@ procedure TScoreSheetForm.NewGame;
 begin
   CurrentFrame := 1;
   ClearFrames();
+  UpdateValidButtons();
 end;
 
 procedure TScoreSheetForm.UpdateFrame(Number: Integer);
@@ -257,8 +275,7 @@ procedure TScoreSheetForm.UpdateValidButtons;
 var
   i: Integer;
 begin
-  for i := 0 to 10 do
-    Buttons[i].Enabled := False;
+  DisableButtons();
   for i := 0 to Game.FramesCtrl.GetCurrent.NumPinsStanding do
     Buttons[i].Enabled := True;
 end;
