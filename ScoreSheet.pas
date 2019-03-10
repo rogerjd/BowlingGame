@@ -315,7 +315,6 @@ begin
     RegFrame()
   else
     FinalFrame();
-
 end;
 
 procedure TScoreSheetForm.UpdateValidButtons;

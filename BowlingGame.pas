@@ -515,23 +515,29 @@ var
     end;
 
   begin
-    with Result do
-    begin
-      Number := frame.Number;
-      Status := GetFrameStaus();
-      FrameScoreInPoints := frame.Score;
-      Inc(TotalScore, frame.Score);
-      GameScore := TotalScore;
+    Result.Number := frame.Number;
+    Result.Status := GetFrameStaus();
+    Result.FrameScoreInPoints := frame.Score;
+    Inc(TotalScore, frame.Score);
+    Result.GameScore := TotalScore;
 
-      if Status <> '' then // todo: use fmt?
+    if Result.Status <> '' then // todo: use fmt?
+    begin
+      Result.FrameScore := frame.FrameRollsCtrl.RollTotalAsString
+        (frame.FrameRollsCtrl.FrameRolls[0]);
+      if frame.FrameRollsCtrl.FrameRolls.Count = 2 then
       begin
-        FrameScore := frame.FrameRollsCtrl.RollTotalAsString
-          (frame.FrameRollsCtrl.FrameRolls[0]);
-        if frame.FrameRollsCtrl.FrameRolls.Count = 2 then
-          FrameScore := FrameScore + ' ' +
-            frame.FrameRollsCtrl.RollTotalAsString
-            (frame.FrameRollsCtrl.FrameRolls[1]);
-      end;
+        Result.FrameScore := Result.FrameScore + ' ' +
+          frame.FrameRollsCtrl.RollTotalAsString
+          (frame.FrameRollsCtrl.FrameRolls[1]);
+      end
+      else if frame.FrameRollsCtrl.FrameRolls.Count = 3 then
+      begin
+        Result.FrameScore := Result.FrameScore + ' ' +
+          frame.FrameRollsCtrl.RollTotalAsString(frame.FrameRollsCtrl.FrameRolls
+          [1]) + ' ' + frame.FrameRollsCtrl.RollTotalAsString
+          (frame.FrameRollsCtrl.FrameRolls[2]);
+      end
     end;
   end;
 
@@ -561,7 +567,7 @@ begin
   frame := FramesCtrl.Frames[FramesCtrl.CurrentFrame];
   sbf := InitScoreByFrame();
   if sbf.Status = 'In Play' then
-    ScoreByFrames.Add(InitScoreByFrame());
+    ScoreByFrames.Add(sbf (* InitScoreByFrame() *) );
 
   Result := ScoreByFrames;
 end;
