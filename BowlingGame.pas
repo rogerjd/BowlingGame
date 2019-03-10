@@ -68,7 +68,7 @@ type
     // Score: integer;
     Scored: Boolean;
     // todo: cumulative, set along with Score (prop)?
-    function NumPinsStanding(): Integer;
+    function NumPinsStanding(): integer;
     procedure Reset();
     function CheckRollInput(NumOfPins: integer): Boolean;
     property OpenFrame: Boolean read GetOpenFrame;
@@ -310,10 +310,10 @@ end;
 // output: boolean, True if NumOfPins is <= pins standing in the current frame, else false
 function TFrame.CheckRollInput(NumOfPins: integer): Boolean;
 var
-  PinsStanding: integer; //todo:
+  PinsStanding: integer; // todo:
 begin
   // 10th frame can have strike/spare and still be 'active frame'
-  //PinsStanding := 10 - (FrameRollsCtrl.GetScore() mod 10);
+  // PinsStanding := 10 - (FrameRollsCtrl.GetScore() mod 10);
   Result := NumOfPins <= NumPinsStanding;
 end;
 
@@ -340,7 +340,7 @@ begin
     Result := not OpenFrame;
 end;
 
-function TFrame.NumPinsStanding: Integer;
+function TFrame.NumPinsStanding: integer;
 begin
   Result := 10 - (FrameRollsCtrl.GetScore() mod 10);
 end;

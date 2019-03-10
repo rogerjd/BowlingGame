@@ -2,7 +2,7 @@ program BowlingExercise;
 
 uses
   Vcl.Forms,
-  MainForm in 'MainForm.pas' {Form1},
+  MainForm in 'MainForm.pas' {Form1} ,
   BowlingGame in 'BowlingGame.pas',
   ScoreSheet in 'ScoreSheet.pas' {Form2};
 
