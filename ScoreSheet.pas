@@ -88,11 +88,11 @@ type
     Game: TBowlingGame;
     CurrentFrame: Integer;
     PendingFrames: TList<Integer>;
-    sbf: TScoreByFrame;
+    sbfl: TList<TScoreByFrame>;
 
     procedure UpdateFrame(Number: Integer);
     procedure UpdateValidButtons();
-    function Get(box: char; frame: Integer): TPanel;
+    function GetBox(box: char; frame: Integer): TPanel;
   public
     { Public declarations }
   end;
@@ -112,7 +112,7 @@ end;
 procedure TScoreSheetForm.Button0Click(Sender: TObject);
 var
   n: Integer;
-  sbfl: TList<TScoreByFrame>;
+  sbf: TScoreByFrame;
 
   procedure UpdatePending();
   var
@@ -156,13 +156,13 @@ var
 begin
   for i := 1 to 10 do
   begin
-    pnl := Get('a', i);
+    pnl := GetBox('a', i);
     pnl.Caption := '';
 
-    pnl := Get('b', i);
+    pnl := GetBox('b', i);
     pnl.Caption := '';
 
-    pnl := Get('c', i);
+    pnl := GetBox('c', i);
     pnl.Caption := '';
   end;
 end;
@@ -200,7 +200,7 @@ begin
   DisableButtons();
 end;
 
-function TScoreSheetForm.Get(box: char; frame: Integer): TPanel;
+function TScoreSheetForm.GetBox(box: char; frame: Integer): TPanel;
 begin
   Result := TPanel(self.FindComponent('Panel' + IntToStr(frame) + box));
 end;
@@ -245,6 +245,7 @@ end;
 
 procedure TScoreSheetForm.NewGame;
 begin
+  Game.Start();
   CurrentFrame := 1;
   ClearFrames();
   UpdateValidButtons();
@@ -253,21 +254,30 @@ end;
 procedure TScoreSheetForm.UpdateFrame(Number: Integer);
 var
   boxA, boxB, boxTot: TPanel;
+  sbfTemp: TScoreByFrame;
 begin
-  boxA := Get('a', Number);
-  boxB := Get('b', Number);
+  sbfTemp := sbfl[Number - 1];
 
-  if length(sbf.FrameScore) = 1 then
+  boxA := GetBox('a', Number);
+  boxB := GetBox('b', Number);
+
+  if length(sbfTemp.FrameScore) = 1 then
   begin
-    if sbf.FrameScore = 'X' then
-      boxB.Caption := sbf.FrameScore[1]
+    if sbfTemp.FrameScore = 'X' then
+      boxB.Caption := sbfTemp.FrameScore[1]
     else
-      boxA.Caption := sbf.FrameScore[1];
+      boxA.Caption := sbfTemp.FrameScore[1];
   end
   else
   begin
-    boxA.Caption := sbf.FrameScore[1];
-    boxB.Caption := sbf.FrameScore[3];
+    boxA.Caption := sbfTemp.FrameScore[1];
+    boxB.Caption := sbfTemp.FrameScore[3];
+  end;
+
+  if sbfTemp.Status = 'Scored' then
+  begin
+    boxTot := GetBox('c', Number);
+    boxTot.Caption := IntToStr(sbfTemp.GameScore);
   end;
 end;
 
