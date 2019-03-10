@@ -331,7 +331,7 @@ begin
   // 7
 
   FBowlingGame.Roll(10);
-  Assert(FBowlingGame.TotalScore = 134);
+  Assert(FBowlingGame.TotalScore = 143);
   sbfl := FBowlingGame.ScoreByFrame();
   Assert(sbfl.Count = 8);
   sbf := sbfl[7];
@@ -340,7 +340,7 @@ begin
   // 8
 
   FBowlingGame.Roll(10);
-  Assert(FBowlingGame.TotalScore = 164);
+  Assert(FBowlingGame.TotalScore = 143);
   sbfl := FBowlingGame.ScoreByFrame();
   Assert(sbfl.Count = 9);
   sbf := sbfl[8];
@@ -349,7 +349,7 @@ begin
   // 9
 
   FBowlingGame.Roll(4);
-  Assert(FBowlingGame.TotalScore = 188);
+  Assert(FBowlingGame.TotalScore = 167);
   sbfl := FBowlingGame.ScoreByFrame();
   Assert(sbfl.Count = 10);
   sbf := sbfl[9];
@@ -357,7 +357,7 @@ begin
   Assert(sbf.Number = 10);
 
   FBowlingGame.Roll(3);
-  Assert(FBowlingGame.TotalScore = 212);
+  Assert(FBowlingGame.TotalScore = 191);
   sbfl := FBowlingGame.ScoreByFrame();
   Assert(sbfl.Count = 10);
   sbf := sbfl[9];
@@ -398,15 +398,15 @@ begin
   Assert(sbf.Status = 'Scored');
   Assert(sbf.Number = 5);
   Assert(sbf.FrameScore = 'X');
-  Assert(sbf.FrameScoreInPoints = 30);
-  Assert(sbf.GameScore = 104);
+  Assert(sbf.FrameScoreInPoints = 29);
+  Assert(sbf.GameScore = 103);
 
   sbf := sbfl[5];
   Assert(sbf.Status = 'Scored');
   Assert(sbf.Number = 6);
   Assert(sbf.FrameScore = 'X');
-  Assert(sbf.FrameScoreInPoints = 30);
-  Assert(sbf.GameScore = 134);
+  Assert(sbf.FrameScoreInPoints = 20);
+  Assert(sbf.GameScore = 123);
 
   sbf := sbfl[6];
   Assert(sbf.Status = 'Scored');
@@ -420,21 +420,21 @@ begin
   Assert(sbf.Number = 8);
   Assert(sbf.FrameScore = 'X');
   Assert(sbf.FrameScoreInPoints = 24);
-  Assert(sbf.GameScore = 188);
+  Assert(sbf.GameScore = 167);
 
   sbf := sbfl[8];
   Assert(sbf.Status = 'Scored');
   Assert(sbf.Number = 9);
   Assert(sbf.FrameScore = 'X');
   Assert(sbf.FrameScoreInPoints = 17);
-  Assert(sbf.GameScore = 205);
+  Assert(sbf.GameScore = 184);
 
   sbf := sbfl[9];
   Assert(sbf.Status = 'Scored');
   Assert(sbf.Number = 10);
   Assert(sbf.FrameScore = '4 3');
   Assert(sbf.FrameScoreInPoints = 7);
-  Assert(sbf.GameScore = 212);
+  Assert(sbf.GameScore = 191);
 
 end;
 
