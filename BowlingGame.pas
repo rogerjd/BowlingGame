@@ -287,8 +287,7 @@ begin
   if Number = 1 then
     RunningTotal := Value
   else
-    RunningTotal := FramesCtrl.Frames
-      [Number - 1].RunningTotal + Value;
+    RunningTotal := FramesCtrl.Frames[Number - 1].RunningTotal + Value;
 end;
 
 procedure TFrame.SetCurrentRoll(const Value: integer);

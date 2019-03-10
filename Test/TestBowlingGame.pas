@@ -33,6 +33,7 @@ type
     procedure TestGame1();
     procedure TestGame2();
     procedure TestScoreByFrame;
+    procedure TestScoreByFrame2;
   end;
 
 implementation
@@ -435,6 +436,41 @@ begin
   Assert(sbf.FrameScore = '4 3');
   Assert(sbf.FrameScoreInPoints = 7);
   Assert(sbf.GameScore = 191);
+
+end;
+
+procedure TestTBowlingGame.TestScoreByFrame2;
+var
+  sbfl: TList<TScoreByFrame>;
+  sbf: TScoreByFrame;
+begin
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 0);
+
+  FBowlingGame.Roll(9);
+  Assert(FBowlingGame.TotalScore = 0);
+
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 1);
+  Assert(sbfl[0].Status = 'In Play');
+  Assert(sbfl[0].Number = 1);
+
+  FBowlingGame.Roll(1);
+  Assert(FBowlingGame.TotalScore = 0);
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 1);
+  sbf := sbfl[0];
+  Assert(sbf.Status = 'Pending');
+  Assert(sbfl[0].Number = 1);
+  // 1
+
+  FBowlingGame.Roll(2);
+  Assert(FBowlingGame.TotalScore = 12);
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 2);
+  sbf := sbfl[1];
+  Assert(sbf.Status = 'In Play');
+  Assert(sbf.Number = 2);
 
 end;
 

@@ -121,7 +121,7 @@ var
   begin
     for i := PendingFrames.Count - 1 downto 0 do
     begin
-      if sbfl[PendingFrames[i]].Status = 'Scored' then
+      if sbfl[PendingFrames[i] - 1].Status = 'Scored' then
       begin
         UpdateFrame(PendingFrames[i]);
         PendingFrames.Delete(i);
