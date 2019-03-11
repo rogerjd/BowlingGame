@@ -7,9 +7,7 @@ uses
 
 type
   TRollTotal = (rtZero, rtOne, rtTwo, rtThree, rtFour, rtFive, rtSix, rtSeven,
-    rtEight, rtNine, rtStrike, rtSpare); // todo: never 10?
-
-  TFrameRolls2 = array [1 .. 3] of TRollTotal;
+    rtEight, rtNine, rtStrike, rtSpare); // if 10 is rolled it will be rtStrike
 
   TFrame = class;
 
@@ -34,10 +32,8 @@ type
 
   TFrame = class
   private
-    FCurrentRoll: integer;
     FScore: integer;
     FRunningTotal: integer;
-    procedure SetCurrentRoll(const Value: integer);
     function GetOpenFrame: Boolean;
     procedure SetScore(const Value: integer);
     procedure SetRunningTotal(const Value: integer);
@@ -67,7 +63,6 @@ type
   private
     Frames: TFrames;
     CurrentFrame: integer;
-    Game: TBowlingGame;
   public
     function GetCurrent(): TFrame;
     function Next(): Boolean;
@@ -84,6 +79,7 @@ type
   private
     function ReadyToScore(): Boolean;
     procedure Score();
+  public
     constructor Create(xFrameNum: integer; xFramesCtrl: TFramesCtrl);
     destructor Destroy; override;
   end;
@@ -94,6 +90,7 @@ type
     function Any(): Boolean;
     procedure Add(FrameNum: integer; xFramesCtrl: TFramesCtrl);
     procedure AddBonusPoints(pts: integer);
+  public
     constructor Create();
     destructor Destroy; override;
   end;
@@ -120,7 +117,6 @@ type
   TBowlingGame = class
   private
     FTotalScore: integer;
-    procedure CalculateScore();
   public
     FramesCtrl: TFramesCtrl;
     ScoreCtrl: TScoreCtrl;
@@ -145,14 +141,9 @@ type
 implementation
 
 uses
-  Dialogs, SysUtils;
+  Dialogs, SysUtils, System.UITypes;
 
 { TBowlingGame }
-
-procedure TBowlingGame.CalculateScore;
-begin
-
-end;
 
 constructor TBowlingGame.Create;
 begin
@@ -230,12 +221,10 @@ end;
 // input: NumOfPins int, the number of pins knocked down in this roll
 // output: boolean, True if NumOfPins is <= pins standing in the current frame, else false
 function TFrame.CheckRollInput(NumOfPins: integer): Boolean;
-var
-  PinsStanding: integer; // todo:
 begin
   // 10th frame can have strike/spare and still be 'active frame'
   // PinsStanding := 10 - (FrameRollsCtrl.GetScore() mod 10);
-  Result := NumOfPins <= NumPinsStanding;
+  Result := NumOfPins <= NumPinsStanding();
 end;
 
 constructor TFrame.Create(xFrameNum: integer; xFramesCtrl: TFramesCtrl;
@@ -284,8 +273,6 @@ begin
 end;
 
 procedure TFrame.SetScore(const Value: integer);
-var
-  PrevFrame: TFrame;
 begin
   FScore := Value;
   Scored := True;
@@ -294,11 +281,6 @@ begin
     RunningTotal := Value
   else
     RunningTotal := FramesCtrl.Frames[Number - 1].RunningTotal + Value;
-end;
-
-procedure TFrame.SetCurrentRoll(const Value: integer);
-begin
-  FCurrentRoll := Value;
 end;
 
 procedure TFrame.SetRunningTotal(const Value: integer);
@@ -467,6 +449,7 @@ end;
 function TFrameRollsCtrl.RollTotalToNumberOfPins(RollTotal: TRollTotal)
   : integer;
 begin
+  Result := -1;
   case RollTotal of
     rtZero .. rtNine:
       Result := ord(RollTotal);
@@ -654,10 +637,11 @@ end;
 
 function TPendingScoreFrame.ReadyToScore: Boolean;
 begin
+  Result := False;
   if FramesCtrl.Frames[FrameNum].StrikeCount = 1 then
-    Result := BonusPoints.Count = 2 // (Bonus1 > -1) and (Bonus2 > -1)
+    Result := BonusPoints.Count = 2
   else if FramesCtrl.Frames[FrameNum].SpareCount = 1 then
-    Result := BonusPoints.Count = 1; // (Bonus1 > -1);
+    Result := BonusPoints.Count = 1;
 end;
 
 procedure TPendingScoreFrame.Score;

@@ -118,7 +118,6 @@ var
 
   procedure UpdatePending();
   var
-    tmp: TScoreByFrame;
     i: Integer;
   begin
     for i := PendingFrames.Count - 1 downto 0 do
@@ -216,8 +215,6 @@ end;
 procedure TScoreSheetForm.MakeArrays;
 
   procedure MakeButtonsArray();
-  var
-    i: Integer;
   begin
     Buttons[0] := Button0;
     Buttons[1] := Button1;

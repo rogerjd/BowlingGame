@@ -299,8 +299,6 @@ begin
 end;
 
 procedure TestTBowlingGame.TestRoll;
-var
-  NumOfPins: Integer;
 begin
   // TODO: Setup method call parameters
   FBowlingGame.Roll(4);
