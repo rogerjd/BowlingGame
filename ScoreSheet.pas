@@ -170,7 +170,6 @@ begin
 
     pnl := GetBox('c', i);
     pnl.Caption := '';
-
   end;
 end;
 

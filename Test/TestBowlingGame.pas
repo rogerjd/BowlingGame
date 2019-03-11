@@ -240,6 +240,7 @@ begin
 
   FBowlingGame.Roll(10);
   sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 1);
   sbf := sbfl[0];
   Assert(sbf.Status = 'Pending');
   Assert(sbf.Number = 1);

@@ -7,7 +7,7 @@ uses
 
 type
   TRollTotal = (rtZero, rtOne, rtTwo, rtThree, rtFour, rtFive, rtSix, rtSeven,
-    rtEight, rtNine, rtStrike, rtSpare); // if 10 is rolled it will be rtStrike
+    rtEight, rtNine, rtStrike, rtSpare); // if 10 is rolled it will be rtStrike.
 
   TFrame = class;
 
@@ -38,7 +38,7 @@ type
     procedure SetScore(const Value: integer);
     procedure SetRunningTotal(const Value: integer);
   public
-    StrikeCount, SpareCount: integer; // only 1 spare
+    StrikeCount, SpareCount: integer;
     FramesCtrl: TFramesCtrl;
     FrameRollsCtrl: TFrameRollsCtrl;
     Game: TBowlingGame;
@@ -75,7 +75,6 @@ type
     FrameNum: integer;
     FramesCtrl: TFramesCtrl;
     BonusPoints: TList<integer>;
-    // Bonus1, Bonus2: Integer;
   private
     function ReadyToScore(): Boolean;
     procedure Score();
@@ -188,7 +187,7 @@ begin
     MessageDlg('Possible invalid input, roll > pins standing = ' +
       IntToStr(NumOfPins), mtInformation, [mbOK], 0);
   end;
-  frame.FrameRollsCtrl.RecordRoll(NumOfPins); // over < 10
+  frame.FrameRollsCtrl.RecordRoll(NumOfPins);
 
   if ScoreCtrl.Pending.Any then
     ScoreCtrl.Pending.AddBonusPoints(NumOfPins);
@@ -204,14 +203,12 @@ end;
 
 function TBowlingGame.ScoreByFrame: TList<TScoreByFrame>;
 begin
-  // todo:
   Result := ScoreCtrl.GetScoreByFrame();
 end;
 
 procedure TBowlingGame.Start;
 begin
   GameOver := False;
-  // FramesCtrl.Init();
   ScoreCtrl.Init();
   FramesCtrl.Init();
 end;
@@ -222,8 +219,6 @@ end;
 // output: boolean, True if NumOfPins is <= pins standing in the current frame, else false
 function TFrame.CheckRollInput(NumOfPins: integer): Boolean;
 begin
-  // 10th frame can have strike/spare and still be 'active frame'
-  // PinsStanding := 10 - (FrameRollsCtrl.GetScore() mod 10);
   Result := NumOfPins <= NumPinsStanding();
 end;
 
@@ -252,6 +247,7 @@ end;
 
 function TFrame.NumPinsStanding: integer;
 begin
+  // 10th frame can have strike/spare and still be 'active frame'
   Result := 10 - (FrameRollsCtrl.GetScore() mod 10);
 end;
 
@@ -424,7 +420,7 @@ begin
 
   // is frame done
   if frame.Number < 10 then
-  begin // todo: List.Count                                 //todo: use list
+  begin
     if ((frame.StrikeCount + frame.SpareCount) > 0) or (FrameRolls.Count = 2)
     then
       Over := True;
@@ -511,7 +507,7 @@ var
     Result.GameScore := TotalScore;
 
     Result.FrameScore := '';
-    if Result.Status <> '' then // todo: use fmt?
+    if Result.Status <> '' then
     begin
       for i := 0 to frame.FrameRollsCtrl.FrameRolls.Count - 1 do
       begin
@@ -521,27 +517,6 @@ var
       end;
       Delete(Result.FrameScore, Length(Result.FrameScore), 1);
     end;
-
-    (* this is ok    try loop
-      if Result.Status <> '' then
-      begin
-      Result.FrameScore := frame.FrameRollsCtrl.RollTotalAsString
-      (frame.FrameRollsCtrl.FrameRolls[0]);
-      if frame.FrameRollsCtrl.FrameRolls.Count = 2 then
-      begin
-      Result.FrameScore := Result.FrameScore + ' ' +
-      frame.FrameRollsCtrl.RollTotalAsString
-      (frame.FrameRollsCtrl.FrameRolls[1]);
-      end
-      else if frame.FrameRollsCtrl.FrameRolls.Count = 3 then
-      begin
-      Result.FrameScore := Result.FrameScore + ' ' +
-      frame.FrameRollsCtrl.RollTotalAsString(frame.FrameRollsCtrl.FrameRolls
-      [1]) + ' ' + frame.FrameRollsCtrl.RollTotalAsString
-      (frame.FrameRollsCtrl.FrameRolls[2]);
-      end
-      end;
-    *)
   end;
 
 begin
@@ -562,7 +537,6 @@ begin
   for i := 0 to Pending.FramesPending.Count - 1 do
   begin
     frame := Pending.FramesPending[i].FramesCtrl.Frames
-    // todo: make common?
       [Pending.FramesPending[i].FrameNum];
     ScoreByFrames.Add(InitScoreByFrame())
   end;
@@ -571,7 +545,7 @@ begin
   frame := FramesCtrl.Frames[FramesCtrl.CurrentFrame];
   sbf := InitScoreByFrame();
   if sbf.Status = 'In Play' then
-    ScoreByFrames.Add(sbf (* InitScoreByFrame() *) );
+    ScoreByFrames.Add(sbf);
 
   Result := ScoreByFrames;
 end;
@@ -606,16 +580,12 @@ begin
 
   if frame.FrameRollsCtrl.Over then
   begin
-    if (not frame.NeedRollsRecordedInFutureFrame()) then // ReadyToScore
+    if (not frame.NeedRollsRecordedInFutureFrame()) then
     begin
       frame.Score := frame.FrameRollsCtrl.GetScore();
     end
     else
       Pending.Add(frame.Number, FramesCtrl);
-  end
-  else
-  begin
-    // score := frame score + bonus
   end;
 end;
 
@@ -648,8 +618,8 @@ procedure TPendingScoreFrame.Score;
 var
   frame: TFrame;
 begin
-  frame := FramesCtrl.Frames[FrameNum]; // todo: bug?
-  if frame.StrikeCount = 1 then // todo: bug > 1
+  frame := FramesCtrl.Frames[FrameNum];
+  if frame.StrikeCount = 1 then
   begin
     frame.Score := frame.FrameRollsCtrl.GetScore() + BonusPoints[0] +
       BonusPoints[1];
