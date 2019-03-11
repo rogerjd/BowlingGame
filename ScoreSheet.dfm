@@ -3,7 +3,7 @@ object ScoreSheetForm: TScoreSheetForm
   Top = 0
   ActiveControl = Button0
   Caption = 'Bowling Score Sheet'
-  ClientHeight = 290
+  ClientHeight = 293
   ClientWidth = 917
   Color = clBtnFace
   TransparentColor = True
@@ -137,12 +137,12 @@ object ScoreSheetForm: TScoreSheetForm
     object Label1: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
       Caption = '1'
-      Color = clMoneyGreen
+      Color = clScrollBar
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -151,6 +151,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel1a: TPanel
       Left = 48
@@ -189,12 +190,12 @@ object ScoreSheetForm: TScoreSheetForm
     object Label4: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
       Caption = '4'
-      Color = clMoneyGreen
+      Color = clScrollBar
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -203,6 +204,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel4a: TPanel
       Left = 48
@@ -241,12 +243,12 @@ object ScoreSheetForm: TScoreSheetForm
     object Label5: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
       Caption = '3'
-      Color = clMoneyGreen
+      Color = clScrollBar
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -255,6 +257,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel3c: TPanel
       Left = 0
@@ -293,12 +296,12 @@ object ScoreSheetForm: TScoreSheetForm
     object Label6: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
       Caption = '2'
-      Color = clMoneyGreen
+      Color = clScrollBar
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -307,6 +310,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel2a: TPanel
       Left = 48
@@ -345,12 +349,12 @@ object ScoreSheetForm: TScoreSheetForm
     object Label7: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
       Caption = '7'
-      Color = clMoneyGreen
+      Color = clScrollBar
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -359,6 +363,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel7b: TPanel
       Left = 64
@@ -385,7 +390,6 @@ object ScoreSheetForm: TScoreSheetForm
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitTop = 43
     end
   end
   object Panel6: TPanel
@@ -398,12 +402,12 @@ object ScoreSheetForm: TScoreSheetForm
     object Label8: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
       Caption = '6'
-      Color = clMoneyGreen
+      Color = clScrollBar
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -412,6 +416,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel6b: TPanel
       Left = 64
@@ -438,7 +443,6 @@ object ScoreSheetForm: TScoreSheetForm
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitTop = 43
     end
   end
   object Panel5: TPanel
@@ -451,12 +455,12 @@ object ScoreSheetForm: TScoreSheetForm
     object Label9: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
       Caption = '5'
-      Color = clMoneyGreen
+      Color = clScrollBar
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -465,6 +469,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel5a: TPanel
       Left = 48
@@ -491,7 +496,6 @@ object ScoreSheetForm: TScoreSheetForm
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitTop = 43
     end
   end
   object Panel10: TPanel
@@ -504,12 +508,12 @@ object ScoreSheetForm: TScoreSheetForm
     object Label10: TLabel
       Left = 0
       Top = 0
-      Width = 14
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
       Caption = '10'
-      Color = clMoneyGreen
+      Color = clScrollBar
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -518,6 +522,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 14
     end
     object Panel10b2: TPanel
       Left = 64
@@ -544,7 +549,6 @@ object ScoreSheetForm: TScoreSheetForm
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitTop = 43
     end
     object Panel10b: TPanel
       Left = 48
@@ -565,12 +569,12 @@ object ScoreSheetForm: TScoreSheetForm
     object Label11: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
       Caption = '9'
-      Color = clMoneyGreen
+      Color = clScrollBar
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -579,6 +583,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel9b: TPanel
       Left = 64
@@ -605,7 +610,6 @@ object ScoreSheetForm: TScoreSheetForm
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitTop = 43
     end
   end
   object Panel8: TPanel
@@ -618,12 +622,12 @@ object ScoreSheetForm: TScoreSheetForm
     object Label12: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
       Caption = '8'
-      Color = clMoneyGreen
+      Color = clScrollBar
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -632,6 +636,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel8b: TPanel
       Left = 64
@@ -658,7 +663,6 @@ object ScoreSheetForm: TScoreSheetForm
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 2
-      ExplicitTop = 43
     end
   end
   object btnNewGame: TButton

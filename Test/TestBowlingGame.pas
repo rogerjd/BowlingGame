@@ -34,6 +34,7 @@ type
     procedure TestGame2();
     procedure TestScoreByFrame;
     procedure TestScoreByFrame2;
+    procedure TestNewGame();
   end;
 
 implementation
@@ -197,6 +198,51 @@ begin
   FBowlingGame.Roll(6);
   FBowlingGame.Roll(3);
   Assert(FBowlingGame.TotalScore = 83);
+  Assert(FBowlingGame.GameOver);
+end;
+
+procedure TestTBowlingGame.TestNewGame;
+var
+  sbfl: TList<TScoreByFrame>;
+  sbf: TScoreByFrame;
+begin
+  FBowlingGame.Roll(10);
+  sbfl := FBowlingGame.ScoreByFrame();
+  sbf := sbfl[0];
+  Assert(sbf.Status = 'Pending');
+  Assert(sbf.Number = 1);
+  Assert(sbf.FrameScore = 'X');
+  Assert(sbf.FrameScoreInPoints = 0);
+  Assert(sbf.GameScore = 0);
+
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  Assert(FBowlingGame.TotalScore = 300);
+  Assert(FBowlingGame.GameOver);
+
+  FBowlingGame.Start();
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(10);
+  Assert(FBowlingGame.TotalScore = 300);
   Assert(FBowlingGame.GameOver);
 end;
 

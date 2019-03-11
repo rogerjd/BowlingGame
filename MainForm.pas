@@ -9,12 +9,10 @@ uses
 
 type
   TForm1 = class(TForm)
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
+    btnClose: TButton;
+    btnScoreSheet: TButton;
+    procedure btnCloseClick(Sender: TObject);
+    procedure btnScoreSheetClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -31,30 +29,12 @@ uses
 
 {$R *.dfm}
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.btnCloseClick(Sender: TObject);
 begin
   Close();
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
-var
-  bg: TBowlingGame;
-  sbf: TList<TScoreByFrame>;
-begin
-  bg := TBowlingGame.Create();
-  bg.Start();
-  bg.Roll(3);
-  bg.Roll(4);
-  bg.Roll(10);
-  bg.Roll(7);
-  bg.Roll(2);
-
-  sbf := bg.ScoreByFrame();
-
-  bg.Free();
-end;
-
-procedure TForm1.Button3Click(Sender: TObject);
+procedure TForm1.btnScoreSheetClick(Sender: TObject);
 var
   frm: TScoreSheetForm;
 begin

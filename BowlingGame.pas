@@ -270,6 +270,7 @@ procedure TFrame.Reset;
 begin
   Score := 0;
   Scored := False;
+
   RunningTotal := 0;
   FrameRollsCtrl.FrameRolls.Clear();
 end;
@@ -341,6 +342,7 @@ begin
   for i := 1 to 10 do
   begin
     Frames[i].Reset();
+    Frames[i].Scored := False;
   end;
 
 end;
@@ -523,34 +525,36 @@ var
     Inc(TotalScore, frame.Score);
     Result.GameScore := TotalScore;
 
-    Result.FrameScore := '';
-    if Result.Status <> '' then // todo: use fmt?
-    begin
+    (*
+      Result.FrameScore := '';
+      if Result.Status <> '' then // todo: use fmt?
+      begin
       for i := 0 to frame.FrameRollsCtrl.FrameRolls.Count - 1 do
       begin
-        Result.FrameScore := Result.FrameScore +
-          frame.FrameRollsCtrl.RollTotalAsString(frame.FrameRollsCtrl.FrameRolls
-          [i]) + ' ';
+      Result.FrameScore := Result.FrameScore +
+      frame.FrameRollsCtrl.RollTotalAsString(frame.FrameRollsCtrl.FrameRolls
+      [i]) + ' ';
       end;
       Delete(Result.FrameScore, Length(Result.FrameScore), 1);
+    *)
 
-      (*
-        Result.FrameScore := frame.FrameRollsCtrl.RollTotalAsString
+    if Result.Status <> '' then
+    begin
+      Result.FrameScore := frame.FrameRollsCtrl.RollTotalAsString
         (frame.FrameRollsCtrl.FrameRolls[0]);
-        if frame.FrameRollsCtrl.FrameRolls.Count = 2 then
-        begin
+      if frame.FrameRollsCtrl.FrameRolls.Count = 2 then
+      begin
         Result.FrameScore := Result.FrameScore + ' ' +
-        frame.FrameRollsCtrl.RollTotalAsString
-        (frame.FrameRollsCtrl.FrameRolls[1]);
-        end
-        else if frame.FrameRollsCtrl.FrameRolls.Count = 3 then
-        begin
+          frame.FrameRollsCtrl.RollTotalAsString
+          (frame.FrameRollsCtrl.FrameRolls[1]);
+      end
+      else if frame.FrameRollsCtrl.FrameRolls.Count = 3 then
+      begin
         Result.FrameScore := Result.FrameScore + ' ' +
-        frame.FrameRollsCtrl.RollTotalAsString(frame.FrameRollsCtrl.FrameRolls
-        [1]) + ' ' + frame.FrameRollsCtrl.RollTotalAsString
-        (frame.FrameRollsCtrl.FrameRolls[2]);
-        end
-      *)
+          frame.FrameRollsCtrl.RollTotalAsString(frame.FrameRollsCtrl.FrameRolls
+          [1]) + ' ' + frame.FrameRollsCtrl.RollTotalAsString
+          (frame.FrameRollsCtrl.FrameRolls[2]);
+      end
     end;
   end;
 
@@ -571,7 +575,8 @@ begin
   // get pending frames
   for i := 0 to Pending.FramesPending.Count - 1 do
   begin
-    frame := Pending.FramesPending[i].FramesCtrl.Frames // todo: make common?
+    frame := Pending.FramesPending[i].FramesCtrl.Frames
+    // todo: make common?
       [Pending.FramesPending[i].FrameNum];
     ScoreByFrames.Add(InitScoreByFrame())
   end;

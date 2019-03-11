@@ -1,6 +1,7 @@
 object Form1: TForm1
   Left = 0
   Top = 0
+  ActiveControl = btnScoreSheet
   Caption = 'Form1'
   ClientHeight = 243
   ClientWidth = 472
@@ -13,31 +14,22 @@ object Form1: TForm1
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object Button1: TButton
-    Left = 24
-    Top = 96
+  object btnClose: TButton
+    Left = 8
+    Top = 210
     Width = 75
     Height = 25
     Caption = 'Close'
     TabOrder = 0
-    OnClick = Button1Click
+    OnClick = btnCloseClick
   end
-  object Button2: TButton
-    Left = 105
-    Top = 96
-    Width = 75
-    Height = 25
-    Caption = 'Start'
-    TabOrder = 1
-    OnClick = Button2Click
-  end
-  object Button3: TButton
-    Left = 368
-    Top = 96
+  object btnScoreSheet: TButton
+    Left = 198
+    Top = 109
     Width = 75
     Height = 25
     Caption = 'Score Sheet'
-    TabOrder = 2
-    OnClick = Button3Click
+    TabOrder = 1
+    OnClick = btnScoreSheetClick
   end
 end

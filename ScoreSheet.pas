@@ -162,9 +162,15 @@ begin
 
     pnl := GetBox('b', i);
     pnl.Caption := '';
+    if i = 10 then
+    begin
+      pnl := GetBox('b2', i);
+      pnl.Caption := '';
+    end;
 
     pnl := GetBox('c', i);
     pnl.Caption := '';
+
   end;
 end;
 
@@ -249,6 +255,7 @@ begin
   Game.Start();
   CurrentFrame := 1;
   ClearFrames();
+  PendingFrames.Clear();
   UpdateValidButtons();
 end;
 
