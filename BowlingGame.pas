@@ -83,7 +83,7 @@ type
     destructor Destroy; override;
   end;
 
-  //frames with strike/spare; they need a roll in a  future frame in order to score
+  // frames with strike/spare; they need a roll in a  future frame in order to score
   TPendingFrames = class
     FramesPending: TList<TPendingScoreFrame>;
   private
@@ -620,7 +620,7 @@ var
   frame: TFrame;
 begin
   frame := FramesCtrl.Frames[FrameNum];
-  if frame.StrikeCount = 1 then
+  if frame.StrikeCount = 1 then
   begin
     frame.Score := frame.FrameRollsCtrl.GetScore() + BonusPoints[0] +
       BonusPoints[1];
