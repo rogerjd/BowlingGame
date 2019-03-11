@@ -206,6 +206,9 @@ var
   sbfl: TList<TScoreByFrame>;
   sbf: TScoreByFrame;
 begin
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 0);
+
   FBowlingGame.Roll(10);
   sbfl := FBowlingGame.ScoreByFrame();
   sbf := sbfl[0];
@@ -230,9 +233,35 @@ begin
   Assert(FBowlingGame.GameOver);
 
   FBowlingGame.Start();
+  sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 0);
+
+  FBowlingGame.Roll(10);
+  sbfl := FBowlingGame.ScoreByFrame();
+  sbf := sbfl[0];
+  Assert(sbf.Status = 'Pending');
+  Assert(sbf.Number = 1);
+  Assert(sbf.FrameScore = 'X');
+  Assert(sbf.FrameScoreInPoints = 0);
+  Assert(sbf.GameScore = 0);
+
   FBowlingGame.Roll(10);
   FBowlingGame.Roll(10);
-  FBowlingGame.Roll(10);
+  sbfl := FBowlingGame.ScoreByFrame();
+  sbf := sbfl[0];
+  Assert(sbf.Status = 'Scored');
+  Assert(sbf.Number = 1);
+  Assert(sbf.FrameScore = 'X');
+  Assert(sbf.FrameScoreInPoints = 30);
+  Assert(sbf.GameScore = 30);
+
+  sbf := sbfl[2];
+  Assert(sbf.Status = 'Pending');
+  Assert(sbf.Number = 3);
+  Assert(sbf.FrameScore = 'X');
+  Assert(sbf.FrameScoreInPoints = 0);
+  Assert(sbf.GameScore = 30);
+
   FBowlingGame.Roll(10);
   FBowlingGame.Roll(10);
   FBowlingGame.Roll(10);

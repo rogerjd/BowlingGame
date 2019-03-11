@@ -270,9 +270,12 @@ procedure TFrame.Reset;
 begin
   Score := 0;
   Scored := False;
+  StrikeCount := 0;
+  SpareCount := 0;
 
   RunningTotal := 0;
   FrameRollsCtrl.FrameRolls.Clear();
+  FrameRollsCtrl.Over := False;
 end;
 
 function TFrame.GetOpenFrame: Boolean;
@@ -344,7 +347,6 @@ begin
     Frames[i].Reset();
     Frames[i].Scored := False;
   end;
-
 end;
 
 function TFramesCtrl.Next: Boolean;
