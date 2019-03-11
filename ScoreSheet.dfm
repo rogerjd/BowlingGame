@@ -137,7 +137,7 @@ object ScoreSheetForm: TScoreSheetForm
     object Label1: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
@@ -151,6 +151,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel1a: TPanel
       Left = 48
@@ -189,7 +190,7 @@ object ScoreSheetForm: TScoreSheetForm
     object Label4: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
@@ -203,6 +204,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel4a: TPanel
       Left = 48
@@ -241,7 +243,7 @@ object ScoreSheetForm: TScoreSheetForm
     object Label5: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
@@ -255,6 +257,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel3c: TPanel
       Left = 0
@@ -293,7 +296,7 @@ object ScoreSheetForm: TScoreSheetForm
     object Label6: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
@@ -307,6 +310,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel2a: TPanel
       Left = 48
@@ -345,7 +349,7 @@ object ScoreSheetForm: TScoreSheetForm
     object Label7: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
@@ -359,6 +363,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel7b: TPanel
       Left = 64
@@ -397,7 +402,7 @@ object ScoreSheetForm: TScoreSheetForm
     object Label8: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
@@ -411,6 +416,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel6b: TPanel
       Left = 64
@@ -449,7 +455,7 @@ object ScoreSheetForm: TScoreSheetForm
     object Label9: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
@@ -463,6 +469,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel5a: TPanel
       Left = 48
@@ -501,7 +508,7 @@ object ScoreSheetForm: TScoreSheetForm
     object Label10: TLabel
       Left = 0
       Top = 0
-      Width = 14
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
@@ -515,6 +522,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 14
     end
     object Panel10b2: TPanel
       Left = 64
@@ -561,7 +569,7 @@ object ScoreSheetForm: TScoreSheetForm
     object Label11: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
@@ -575,6 +583,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel9b: TPanel
       Left = 64
@@ -613,7 +622,7 @@ object ScoreSheetForm: TScoreSheetForm
     object Label12: TLabel
       Left = 0
       Top = 0
-      Width = 7
+      Width = 81
       Height = 13
       Align = alTop
       Alignment = taCenter
@@ -627,6 +636,7 @@ object ScoreSheetForm: TScoreSheetForm
       ParentColor = False
       ParentFont = False
       Transparent = False
+      ExplicitWidth = 7
     end
     object Panel8b: TPanel
       Left = 64
@@ -663,5 +673,15 @@ object ScoreSheetForm: TScoreSheetForm
     Caption = 'New Game'
     TabOrder = 21
     OnClick = btnNewGameClick
+  end
+  object Button11: TButton
+    Left = 32
+    Top = 260
+    Width = 75
+    Height = 25
+    Cancel = True
+    Caption = 'Close'
+    ModalResult = 2
+    TabOrder = 22
   end
 end

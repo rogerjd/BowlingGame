@@ -211,6 +211,8 @@ begin
 
   FBowlingGame.Roll(10);
   sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 1);
+  sbfl := FBowlingGame.ScoreByFrame();
   sbf := sbfl[0];
   Assert(sbf.Status = 'Pending');
   Assert(sbf.Number = 1);
@@ -248,12 +250,15 @@ begin
   FBowlingGame.Roll(10);
   FBowlingGame.Roll(10);
   sbfl := FBowlingGame.ScoreByFrame();
+  Assert(sbfl.Count = 3);
   sbf := sbfl[0];
   Assert(sbf.Status = 'Scored');
   Assert(sbf.Number = 1);
   Assert(sbf.FrameScore = 'X');
   Assert(sbf.FrameScoreInPoints = 30);
   Assert(sbf.GameScore = 30);
+  sbf := sbfl[2];
+  Assert(sbf.Status = 'Pending');
 
   sbf := sbfl[2];
   Assert(sbf.Status = 'Pending');

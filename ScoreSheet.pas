@@ -73,6 +73,7 @@ type
     Panel9c: TPanel;
     Panel10c: TPanel;
     Panel10b: TPanel;
+    Button11: TButton;
     procedure Button0Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
