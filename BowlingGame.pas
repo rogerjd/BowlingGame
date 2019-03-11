@@ -83,6 +83,7 @@ type
     destructor Destroy; override;
   end;
 
+  //frames with strike/spare; they need a roll in a  future frame in order to score
   TPendingFrames = class
     FramesPending: TList<TPendingScoreFrame>;
   private
