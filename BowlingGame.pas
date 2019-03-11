@@ -527,37 +527,38 @@ var
     Inc(TotalScore, frame.Score);
     Result.GameScore := TotalScore;
 
-    (*
-      Result.FrameScore := '';
-      if Result.Status <> '' then // todo: use fmt?
-      begin
+    Result.FrameScore := '';
+    if Result.Status <> '' then // todo: use fmt?
+    begin
       for i := 0 to frame.FrameRollsCtrl.FrameRolls.Count - 1 do
       begin
-      Result.FrameScore := Result.FrameScore +
-      frame.FrameRollsCtrl.RollTotalAsString(frame.FrameRollsCtrl.FrameRolls
-      [i]) + ' ';
+        Result.FrameScore := Result.FrameScore +
+          frame.FrameRollsCtrl.RollTotalAsString(frame.FrameRollsCtrl.FrameRolls
+          [i]) + ' ';
       end;
       Delete(Result.FrameScore, Length(Result.FrameScore), 1);
-    *)
+    end;
 
-    if Result.Status <> '' then
-    begin
+    (* this is ok    try loop
+      if Result.Status <> '' then
+      begin
       Result.FrameScore := frame.FrameRollsCtrl.RollTotalAsString
-        (frame.FrameRollsCtrl.FrameRolls[0]);
+      (frame.FrameRollsCtrl.FrameRolls[0]);
       if frame.FrameRollsCtrl.FrameRolls.Count = 2 then
       begin
-        Result.FrameScore := Result.FrameScore + ' ' +
-          frame.FrameRollsCtrl.RollTotalAsString
-          (frame.FrameRollsCtrl.FrameRolls[1]);
+      Result.FrameScore := Result.FrameScore + ' ' +
+      frame.FrameRollsCtrl.RollTotalAsString
+      (frame.FrameRollsCtrl.FrameRolls[1]);
       end
       else if frame.FrameRollsCtrl.FrameRolls.Count = 3 then
       begin
-        Result.FrameScore := Result.FrameScore + ' ' +
-          frame.FrameRollsCtrl.RollTotalAsString(frame.FrameRollsCtrl.FrameRolls
-          [1]) + ' ' + frame.FrameRollsCtrl.RollTotalAsString
-          (frame.FrameRollsCtrl.FrameRolls[2]);
+      Result.FrameScore := Result.FrameScore + ' ' +
+      frame.FrameRollsCtrl.RollTotalAsString(frame.FrameRollsCtrl.FrameRolls
+      [1]) + ' ' + frame.FrameRollsCtrl.RollTotalAsString
+      (frame.FrameRollsCtrl.FrameRolls[2]);
       end
-    end;
+      end;
+    *)
   end;
 
 begin

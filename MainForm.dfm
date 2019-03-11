@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   ActiveControl = btnScoreSheet
-  Caption = 'Form1'
+  Caption = 'Bowling'
   ClientHeight = 243
   ClientWidth = 472
   Color = clBtnFace
