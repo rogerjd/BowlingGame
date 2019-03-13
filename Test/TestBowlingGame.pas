@@ -79,6 +79,68 @@ begin
   FBowlingGame.Roll(10);
   Assert(FBowlingGame.TotalScore = 200);
   Assert(FBowlingGame.GameOver);
+//////////////////////////////////////////////////////////
+  FBowlingGame.Start();
+  Assert(not FBowlingGame.GameOver);
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+  FBowlingGame.Roll(10);
+
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+  FBowlingGame.Roll(10);
+
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+  FBowlingGame.Roll(10);
+
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+  FBowlingGame.Roll(10);
+
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+
+  Assert(FBowlingGame.TotalScore = 200);
+  Assert(FBowlingGame.GameOver);
+//////////////////////////////////////////////////////////////
+
+  FBowlingGame.Start();
+  Assert(not FBowlingGame.GameOver);
+  FBowlingGame.Roll(5);
+  FBowlingGame.Roll(3); //1
+
+  FBowlingGame.Roll(10);
+
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+
+  FBowlingGame.Roll(6);
+  FBowlingGame.Roll(3);
+
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+
+  FBowlingGame.Roll(10);
+
+  FBowlingGame.Roll(0);
+  FBowlingGame.Roll(10);
+
+  FBowlingGame.Roll(10);
+
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+
+  FBowlingGame.Roll(10);
+  FBowlingGame.Roll(7);
+  FBowlingGame.Roll(3);
+
+  Assert(FBowlingGame.TotalScore = 173);
+  Assert(FBowlingGame.GameOver);
+
 end;
 
 procedure TestTBowlingGame.TestAllGutterGame;
@@ -137,7 +199,9 @@ end;
 procedure TestTBowlingGame.TestGame1;
 begin
   FBowlingGame.Roll(9);
+  Assert(FBowlingGame.FramesCtrl.GetCurrent().Number = 1);
   FBowlingGame.Roll(0);
+  Assert(FBowlingGame.FramesCtrl.GetCurrent().Number = 2);
 
   FBowlingGame.Roll(2);
   FBowlingGame.Roll(7);
@@ -160,10 +224,15 @@ begin
   FBowlingGame.Roll(2);
 
   FBowlingGame.Roll(7);
+  Assert(FBowlingGame.FramesCtrl.GetCurrent().Number = 9);
   FBowlingGame.Roll(3);
+  Assert(FBowlingGame.FramesCtrl.GetCurrent().Number = 10);
 
   FBowlingGame.Roll(6);
+  Assert(FBowlingGame.FramesCtrl.GetCurrent().Number = 10);
   FBowlingGame.Roll(3);
+  Assert(FBowlingGame.FramesCtrl.GetCurrent().Number = 10);
+
   Assert(FBowlingGame.TotalScore = 111);
   Assert(FBowlingGame.GameOver);
 end;
