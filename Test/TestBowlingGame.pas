@@ -111,14 +111,19 @@ begin
   FBowlingGame.Start();
   Assert(not FBowlingGame.GameOver);
   FBowlingGame.Roll(5);
+  Assert(not FBowlingGame.ScoreCtrl.Pending.Any);
   FBowlingGame.Roll(3); //1
 
   FBowlingGame.Roll(10);
+  Assert(FBowlingGame.ScoreCtrl.Pending.Any);
 
   FBowlingGame.Roll(7);
+  Assert(FBowlingGame.ScoreCtrl.Pending.Any);
   FBowlingGame.Roll(3);
+  Assert(FBowlingGame.ScoreCtrl.Pending.Any);
 
   FBowlingGame.Roll(6);
+  Assert(not FBowlingGame.ScoreCtrl.Pending.Any);
   FBowlingGame.Roll(3);
 
   FBowlingGame.Roll(7);

@@ -87,10 +87,10 @@ type
   TPendingFrames = class
     FramesPending: TList<TPendingScoreFrame>;
   private
-    function Any(): Boolean;
     procedure Add(FrameNum: integer; xFramesCtrl: TFramesCtrl);
     procedure AddBonusPoints(pts: integer);
   public
+    function Any(): Boolean;
     constructor Create();
     destructor Destroy; override;
   end;
